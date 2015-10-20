@@ -50,7 +50,7 @@ bench::test_class_collection bench::tests::get_all_tests()
       new qdb::int_put::test_class(),
       new qdb::int_remove::test_class(),
       new qdb::int_update::test_class(),
-      //new qdb::tag_add_blob::test_class(),
+      new qdb::tag_add_blob::test_class(),
       new stdio::fread::test_class(),
       new stdio::fwrite::test_class(),
     };
