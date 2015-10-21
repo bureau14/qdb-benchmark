@@ -11,19 +11,15 @@ static std::vector<size_t> parse_size(const std::string & s)
     switch (s.back())
     {
     case 'K':
-    case 'k':
-        return {size_t(std::stoi(s) << 10)};
+    case 'k': return {size_t(std::stoi(s) << 10)};
 
     case 'M':
-    case 'm':
-        return {size_t(std::stoi(s) << 20)};
+    case 'm': return {size_t(std::stoi(s) << 20)};
 
     case 'G':
-    case 'g':
-        return {size_t(std::stoi(s) << 30)};
+    case 'g': return {size_t(std::stoi(s) << 30)};
 
-    default:
-        return {size_t(std::stoi(s))};
+    default: return {size_t(std::stoi(s))};
     }
 }
 
