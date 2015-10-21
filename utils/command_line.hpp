@@ -104,7 +104,11 @@ public:
         std::vector<Value> values;
         std::string _args = get_string(short_syntax, long_syntax, description, default_value);
 
-        for_each_token(_args, [&](const std::string & x) { values.push_back(selector(x)); });
+        for_each_token(_args, [&](const std::string & x) {
+            // Selector may select many values.
+            std::vector<Value> selected = selector(x);
+            ::std::copy(selected.begin(), selected.end(), ::std::back_inserter(values));
+        });
 
         return values;
     }
@@ -114,8 +118,9 @@ public:
                                   const std::string & description,
                                   const std::string & default_value)
     {
-        return get_values<int>(short_syntax, long_syntax, description, default_value,
-                               [](const std::string & s) { return std::stoi(s); });
+        return get_values<int>(
+            short_syntax, long_syntax, description, default_value,
+            [](const std::string & s) { return std::vector<int>{std::stoi(s)}; });
     }
 
 private:

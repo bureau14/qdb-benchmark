@@ -2,34 +2,75 @@
 #include <utils/command_line.hpp>
 
 #include <algorithm>
+#include <cassert>
 #include <iomanip>
 #include <iostream>
 
-static size_t parse_size(const std::string & s)
+static std::vector<size_t> parse_size(const std::string & s)
 {
     switch (s.back())
     {
     case 'K':
-    case 'k': return std::stoi(s) << 10;
+    case 'k':
+        return {size_t(std::stoi(s) << 10)};
 
     case 'M':
-    case 'm': return std::stoi(s) << 20;
+    case 'm':
+        return {size_t(std::stoi(s) << 20)};
 
     case 'G':
-    case 'g': return std::stoi(s) << 30;
+    case 'g':
+        return {size_t(std::stoi(s) << 30)};
 
-    default: return std::stoi(s);
+    default:
+        return {size_t(std::stoi(s))};
     }
 }
 
-static const bench::test_class * get_test_by_name(const bench::test_class_collection & tests,
-                                                  const std::string & name)
+static bench::test_class_collection get_tests_by_name(const bench::test_class_collection & tests,
+                                                      const ::std::string & name)
 {
-    for (auto test : tests)
+    // All tests chosen.
+    if (name == "*") return tests;
+
+    bench::test_class_collection chosen_tests;
+    if (!name.empty())
     {
-        if (test->name == name) return test;
+        for (auto test : tests)
+        {
+            bool chosen = false;
+            if (test->name == name)
+            {
+                chosen = true;
+            }
+            else if ((name.front() == '*') && (name.back() == '*'))
+            {
+                assert(name.size() >= 2);
+                auto name_part = name.substr(1, name.size() - 2);
+                if (test->name.find(name_part) != ::std::string::npos) chosen = true;
+            }
+            else if (name.front() == '*')
+            {
+                auto name_part = name.substr(1);
+                if (test->name.size() >= name_part.size())
+                {
+                    auto test_name_part = test->name.substr(test->name.size() - name_part.size());
+                    if (name_part == test_name_part) chosen = true;
+                }
+            }
+            else if (name.back() == '*')
+            {
+                auto name_part = name.substr(0, name.size() - 1);
+                auto test_name_part = test->name.substr(0, name.size() - 1);
+                if (name_part == test_name_part) chosen = true;
+            }
+
+            if (chosen) chosen_tests.push_back(test);
+        }
     }
-    throw std::runtime_error("Invalid test name: " + name);
+
+    if (chosen_tests.empty()) throw std::runtime_error("Invalid test name: " + name);
+    return chosen_tests;
 }
 
 void bench::app::command_line::parse(int argc, const char ** argv)
@@ -51,10 +92,8 @@ void bench::app::command_line::parse(int argc, const char ** argv)
     _settings.content_sizes =
         parser.get_values<std::size_t>("", "--sizes", "Set contents sizes", "1,1K,1M", parse_size);
     _settings.tests = parser.get_values<const test_class *>(
-        "", "--tests", "Select the tests to run (default=all)", "", [this](const std::string & name)
-        {
-            return get_test_by_name(_test_pool, name);
-        });
+        "", "--tests", "Select the tests to run (default=all)", "",
+        [this](const std::string & name) { return get_tests_by_name(_test_pool, name); });
     parser.check_unknown();
 
     if (_settings.tests.empty()) _settings.tests = _test_pool; // all test by default
