@@ -9,6 +9,7 @@
 
 namespace bench
 {
+
 class test_class
 {
 public:
@@ -21,4 +22,5 @@ public:
 };
 
 typedef std::vector<const test_class *> test_class_collection;
-}
+
+} // namespace bench
