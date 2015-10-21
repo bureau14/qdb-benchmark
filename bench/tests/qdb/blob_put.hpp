@@ -9,6 +9,7 @@ namespace tests
 {
 namespace qdb
 {
+
 class blob_put : public qdb_test_template<blob_put>
 {
 public:
@@ -30,12 +31,12 @@ public:
                      });
     }
 
-    static std::string name()
+    static ::std::string name()
     {
         return "qdb_blob_put";
     }
 
-    static std::string description()
+    static ::std::string description()
     {
         return "Each thread repeats qdb_blob_put() with new aliases";
     }
@@ -46,8 +47,9 @@ public:
     }
 
 private:
-    std::string _content;
+    ::std::string _content;
 };
-}
-}
-}
+
+} // namespace qdb
+} // namespace tests
+} // namespace bench

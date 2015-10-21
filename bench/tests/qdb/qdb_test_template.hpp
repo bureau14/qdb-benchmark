@@ -12,7 +12,8 @@ namespace tests
 {
 namespace qdb
 {
-void set_watermark(std::string & str, unsigned long iteration)
+
+void set_watermark(::std::string & str, unsigned long iteration)
 {
     // print decimal representation in reverse order
     for (int digit = 0; digit < 10; digit++)
@@ -47,16 +48,17 @@ public:
 protected:
     utils::qdb_wrapper _qdb;
 
-    const std::string & alias(unsigned long iteration) const
+    const ::std::string & alias(unsigned long iteration) const
     {
         _alias.set_watermark(iteration);
         return _alias;
     }
 
 private:
-    std::string _cluster_uri;
+    ::std::string _cluster_uri;
     mutable utils::unique_alias _alias;
 };
-}
-}
-}
+
+} // namespace qdb
+} // namespace tests
+} // namespace bench

@@ -9,6 +9,7 @@ namespace tests
 {
 namespace qdb
 {
+
 class deque_pop_front : public qdb_test_template<deque_pop_front>
 {
 public:
@@ -32,12 +33,12 @@ public:
         _qdb.deque_pop_front(alias(0));
     }
 
-    static std::string name()
+    static ::std::string name()
     {
         return "qdb_deque_pop_front";
     }
 
-    static std::string description()
+    static ::std::string description()
     {
         return "Each thread repeats qdb_deque_pop_front() on a queue";
     }
@@ -48,8 +49,9 @@ public:
     }
 
 private:
-    std::string _content;
+    ::std::string _content;
 };
-}
-}
-}
+
+} // namespace qdb
+} // namespace tests
+} // namespace bench

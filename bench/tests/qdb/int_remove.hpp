@@ -8,6 +8,7 @@ namespace tests
 {
 namespace qdb
 {
+
 class int_remove : public qdb_test_template<int_remove>
 {
 public:
@@ -30,12 +31,12 @@ public:
         _qdb.remove(alias(iteration));
     }
 
-    static std::string name()
+    static ::std::string name()
     {
         return "qdb_int_remove";
     }
 
-    static std::string description()
+    static ::std::string description()
     {
         return "Each thread repeats qdb_remove() on integer entries";
     }
@@ -45,6 +46,7 @@ public:
         return false;
     }
 };
-}
-}
-}
+
+} // namespace qdb
+} // namespace tests
+} // namespace bench

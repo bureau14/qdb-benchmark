@@ -8,6 +8,7 @@ namespace bench
 {
 namespace tests
 {
+
 template <typename Derived> // CRTP
 class test_template : public bench::test_loop
 {
@@ -100,5 +101,6 @@ private:
     test_config _config;
     unsigned long _prepared_iterations;
 };
-}
-}
+
+} // namespace tests
+} // namespace bench

@@ -9,6 +9,7 @@ namespace tests
 {
 namespace qdb
 {
+
 class blob_remove : public qdb_test_template<blob_remove>
 {
 public:
@@ -32,12 +33,12 @@ public:
         _qdb.remove(alias(iteration));
     }
 
-    static std::string name()
+    static ::std::string name()
     {
         return "qdb_blob_remove";
     }
 
-    static std::string description()
+    static ::std::string description()
     {
         return "Each thread repeats qdb_remove() on blob entries";
     }
@@ -48,8 +49,9 @@ public:
     }
 
 private:
-    std::string _content;
+    ::std::string _content;
 };
-}
-}
-}
+
+} // namespace qdb
+} // namespace tests
+} // namespace bench

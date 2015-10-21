@@ -15,10 +15,11 @@ namespace tests
 {
 namespace qdb
 {
+
 class node_status : public probe
 {
 public:
-    node_status(std::string cluster_uri) : _cluster_uri(cluster_uri)
+    node_status(::std::string cluster_uri) : _cluster_uri(cluster_uri)
     {
     }
 
@@ -32,10 +33,10 @@ public:
 
     void take_sample(time_point now, result_type & result) override
     {
-        std::vector<std::int64_t> physmem_used, vm_used, evictions;
-        std::vector<std::int64_t> persisted_size, persisted_count;
-        std::vector<std::int64_t> resident_size, resident_count;
-        std::vector<std::int64_t> successes, failures;
+        ::std::vector<::std::int64_t> physmem_used, vm_used, evictions;
+        ::std::vector<::std::int64_t> persisted_size, persisted_count;
+        ::std::vector<::std::int64_t> resident_size, resident_count;
+        ::std::vector<::std::int64_t> successes, failures;
 
         for (auto node : _node_uris)
         {
@@ -67,7 +68,7 @@ public:
     }
 
 private:
-    rapidjson::Document get_node_status(const std::string & node_uri) const
+    rapidjson::Document get_node_status(const ::std::string & node_uri) const
     {
         rapidjson::Document doc;
         utils::qdb_buffer json = _qdb.node_status(node_uri);
@@ -75,7 +76,7 @@ private:
         return doc;
     }
 
-    rapidjson::Document get_node_topology(const std::string & node_uri) const
+    rapidjson::Document get_node_topology(const ::std::string & node_uri) const
     {
         rapidjson::Document doc;
         utils::qdb_buffer json = _qdb.node_topology(node_uri);
@@ -83,34 +84,35 @@ private:
         return doc;
     }
 
-    void add_node(const std::string & node_uri)
+    void add_node(const ::std::string & node_uri)
     {
         _node_uris.push_back(node_uri);
     }
 
-    bool has_node(const std::string & node_uri) const
+    bool has_node(const ::std::string & node_uri) const
     {
-        return std::find(_node_uris.begin(), _node_uris.end(), node_uri) != _node_uris.end();
+        return ::std::find(_node_uris.begin(), _node_uris.end(), node_uri) != _node_uris.end();
     }
 
-    std::string first_node() const
+    ::std::string first_node() const
     {
         // TODO: this assume that only one node is present in the URI, we shoudld extract the node's
         // endpoint from the cluster URI
         return _cluster_uri;
     }
 
-    std::string get_successor(const std::string & node_uri) const
+    ::std::string get_successor(const ::std::string & node_uri) const
     {
         auto topology = get_node_topology(node_uri);
-        std::string endpoint = topology["successor"]["endpoint"].GetString();
+        ::std::string endpoint = topology["successor"]["endpoint"].GetString();
         return "qdb://" + endpoint;
     }
 
-    std::string _cluster_uri;
+    ::std::string _cluster_uri;
     utils::qdb_wrapper _qdb;
-    std::vector<std::string> _node_uris;
+    ::std::vector<::std::string> _node_uris;
 };
-}
-}
-}
+
+} // namespace qdb
+} // namespace tests
+} // namespace bench

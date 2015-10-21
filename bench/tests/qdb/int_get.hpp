@@ -10,6 +10,7 @@ namespace tests
 {
 namespace qdb
 {
+
 class int_get : public qdb_test_template<int_get>
 {
 public:
@@ -33,12 +34,12 @@ public:
         _qdb.remove(alias(0));
     }
 
-    static std::string name()
+    static ::std::string name()
     {
         return "qdb_int_get";
     }
 
-    static std::string description()
+    static ::std::string description()
     {
         return "Each thread repeats qdb_int_get() on one entry";
     }
@@ -48,6 +49,7 @@ public:
         return false;
     }
 };
-}
-}
-}
+
+} // namespace qdb
+} // namespace tests
+} // namespace bench

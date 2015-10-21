@@ -41,12 +41,12 @@ public:
                      });
     }
 
-    static std::string name()
+    static ::std::string name()
     {
         return "qdb_tag_add_blob";
     }
 
-    static std::string description()
+    static ::std::string description()
     {
         return "Each thread repeats qdb_add_tag() on many blobs";
     }
@@ -57,9 +57,10 @@ public:
     }
 
 private:
-    std::string _tag;
-    std::string _content;
+    ::std::string _tag;
+    ::std::string _content;
 };
-}
-}
-}
+
+} // namespace qdb
+} // namespace tests
+} // namespace bench

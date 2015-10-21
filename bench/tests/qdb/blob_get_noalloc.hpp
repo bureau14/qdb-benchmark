@@ -9,6 +9,7 @@ namespace tests
 {
 namespace qdb
 {
+
 class blob_get_noalloc : public qdb_test_template<blob_get_noalloc>
 {
 public:
@@ -27,7 +28,7 @@ public:
     void run_iteration(unsigned long iteration)
     {
         _qdb.blob_get_noalloc(alias(0), _buffer);
-        if (_content.size() != _buffer.size()) throw std::exception();
+        if (_content.size() != _buffer.size()) throw ::std::exception();
     }
 
     void cleanup() override
@@ -35,12 +36,12 @@ public:
         _qdb.remove(alias(0));
     }
 
-    static std::string name()
+    static ::std::string name()
     {
         return "qdb_blob_get_noalloc";
     }
 
-    static std::string description()
+    static ::std::string description()
     {
         return "Each thread repeats qdb_blob_get_noalloc() on one entry";
     }
@@ -51,9 +52,10 @@ public:
     }
 
 private:
-    std::string _buffer;
-    std::string _content;
+    ::std::string _buffer;
+    ::std::string _content;
 };
-}
-}
-}
+
+} // namespace qdb
+} // namespace tests
+} // namespace bench
