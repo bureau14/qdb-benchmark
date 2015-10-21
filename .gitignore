@@ -1,5 +1,5 @@
 # CMake out of source build folder
-/build/
+/build*/
 
 # quasardb binary files
 /qdb/

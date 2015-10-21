@@ -21,8 +21,10 @@
 #include <bench/tests/qdb/int_remove.hpp>
 #include <bench/tests/qdb/int_update.hpp>
 #include <bench/tests/qdb/tag_add_blob.hpp>
-#include <bench/tests/stdio/fread.hpp>
-#include <bench/tests/stdio/fwrite.hpp>
+#include <bench/tests/std/atomic.hpp>
+#include <bench/tests/std/fread.hpp>
+#include <bench/tests/std/fwrite.hpp>
+#include <bench/tests/std/mutex.hpp>
 
 bench::test_class_collection bench::tests::get_all_tests()
 {
@@ -51,7 +53,10 @@ bench::test_class_collection bench::tests::get_all_tests()
       new qdb::int_remove::test_class(),
       new qdb::int_update::test_class(),
       new qdb::tag_add_blob::test_class(),
-      new stdio::fread::test_class(),
-      new stdio::fwrite::test_class(),
+      new std::atomic::test_class(),
+      new std::fread::test_class(),
+      new std::fwrite::test_class(),
+      new std::mutex::test_class(),
     };
+    // clang-format on
 }

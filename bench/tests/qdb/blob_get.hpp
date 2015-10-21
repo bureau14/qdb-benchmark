@@ -9,6 +9,7 @@ namespace tests
 {
 namespace qdb
 {
+
 class blob_get : public qdb_test_template<blob_get>
 {
 public:
@@ -52,6 +53,7 @@ public:
 private:
     std::string _content;
 };
-}
-}
-}
+
+} // namespace qdb
+} // namespace tests
+} // namespace bench

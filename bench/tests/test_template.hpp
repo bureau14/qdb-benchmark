@@ -22,7 +22,7 @@ public:
             size_dependent = Derived::size_dependent();
         }
 
-        std::unique_ptr<bench::test_loop> create_loop(bench::test_config config) const override
+        ::std::unique_ptr<bench::test_loop> create_loop(bench::test_config config) const override
         {
             return utils::make_unique<Derived>(config);
         }

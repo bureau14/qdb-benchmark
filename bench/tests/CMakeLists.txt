@@ -20,8 +20,10 @@ add_library(bench-tests
     qdb/node_status.hpp
     qdb/qdb_test_template.hpp
     qdb/tag_add_blob.hpp
-    stdio/fread.hpp
-    stdio/fwrite.hpp
+    std/atomic.hpp
+    std/fread.hpp
+    std/fwrite.hpp
+    std/mutex.hpp
 
     all_tests.cpp
     all_tests.hpp
