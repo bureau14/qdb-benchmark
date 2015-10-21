@@ -4,6 +4,7 @@
 
 namespace bench
 {
+
 class test_loop
 {
 public:
@@ -33,4 +34,5 @@ protected:
 private:
     volatile unsigned long _iterations;
 };
-}
+
+} // namespace bench
