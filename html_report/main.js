@@ -6,6 +6,8 @@ function addTestResult(test) {
     test.id = test_by_id.length;
     test_by_id.push(test);
 
+    lineSeries = lineSeriesFromTest(test);
+
     if (tests_by_class[test.name] != undefined)
         tests_by_class[test.name].push(test);
     else 

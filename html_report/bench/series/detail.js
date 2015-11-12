@@ -34,7 +34,23 @@ function makeLineFunction(serie, op) {
     };
 }
 
-var lineSeries = [
+function lineSeriesFromTest(test) {
+    var series = defaultLineSeries;
+
+    for (var key in test) {
+        if (optionalLineSeries[key]) {
+            series.push(optionalLineSeries[key]);
+        } else {
+            console.warn("unable to find series: ", key)
+        }
+    }
+
+    return series;
+}
+
+var lineSeries = [];
+
+var defaultLineSeries = [
     {
         "name": "Frequency",
         "unit": unit.kilohertz,
@@ -50,55 +66,90 @@ var lineSeries = [
             if (t0 == undefined) return 0;
             return (x-x0)*test.content_size/(t-t0);
         })
-    },
-    {
+    }];
+
+var optionalLineSeries = {
+    "iterations": {
         "name": "Iterations",
         "unit": unit.none,
         "lines": makeLineFunction("iterations")
     },
-    {
+
+    "successes": {
         "name": "Successes",
         "unit": unit.none,
         "lines": makeLineFunction("successes")
     },
-    {
+
+    "failures": {
         "name": "Failures",
         "unit": unit.none,
         "lines": makeLineFunction("failures")
     },
-    {
+    
+    "vm_used": {
         "name": "Virtual memory usage", 
         "unit": unit.byte,
         "lines": makeLineFunction("vm_used")
     },
-    {
+
+    "physmem_used": {
         "name": "Physical memory usage", 
         "unit": unit.byte,
         "lines": makeLineFunction("physmem_used")
     },
-    {
+
+    "evictions": {
         "name": "Evictions",
         "unit": unit.none,
         "lines": makeLineFunction("evictions")
     },
-    {
+
+    "persisted_size": {
         "name": "Persisted size",
         "unit": unit.byte,
         "lines": makeLineFunction("persisted_size")
     },
-    {
+
+    "persisted_count": {
         "name": "Persisted count",
         "unit": unit.none,
         "lines": makeLineFunction("persisted_count")
     },
-    {
+
+    "resident_size": {
         "name": "Resident size",
         "unit": unit.byte,
         "lines": makeLineFunction("resident_size")
     },
-    {
+
+    "resident_count": {
         "name": "Resident count",
         "unit": unit.none,
         "lines": makeLineFunction("resident_count")
+    },
+
+    "db_objects": {
+        "name": "Database object count",
+        "unit": unit.none,
+        "lines": makeLineFunction("db_objects")
+    },
+
+    "db_storage_size": {
+        "name": "Database storage size",
+        "unit": unit.byte,
+        "lines": makeLineFunction("db_storage_size")
+    },
+
+    "server_objects": {
+        "name": "Server object count",
+        "unit": unit.none,
+        "lines": makeLineFunction("server_objects")
+    },
+
+    "server_storage_size": {
+        "name": "Server storage size",
+        "unit": unit.byte,
+        "lines": makeLineFunction("server_storage_size")
     }
-];
+};
