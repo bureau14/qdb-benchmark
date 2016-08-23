@@ -33,6 +33,7 @@ static bool is_error(qdb_error_t err)
     switch (err)
     {
     case qdb_e_ok:
+    case qdb_e_ok_created:
     case qdb_e_element_already_exists:
     case qdb_e_element_not_found:
         return false;
@@ -121,12 +122,13 @@ std::string quasardb_facade::node_topology(const std::string & node_uri) const
 
 void quasardb_facade::blob_put(const std::string & alias, const std::string & content)
 {
-    INVOKE(qdb_blob_put, _handle, alias.c_str(), content.data(), content.size(), 0);
+    INVOKE(qdb_blob_put, _handle, alias.c_str(), content.data(), content.size(), qdb_never_expires);
 }
 
-void quasardb_facade::blob_update(const std::string & alias, const std::string & content)
+bool quasardb_facade::blob_update(const std::string & alias, const std::string & content)
 {
-    INVOKE(qdb_blob_update, _handle, alias.c_str(), content.data(), content.size(), 0);
+    return INVOKE(qdb_blob_update, _handle, alias.c_str(), content.data(), content.size(), qdb_preserve_expiration)
+           == qdb_e_ok_created;
 }
 
 qdb_buffer quasardb_facade::blob_get(const std::string & alias)
@@ -184,12 +186,12 @@ std::int64_t quasardb_facade::int_add(const std::string & alias, std::int64_t va
 
 void quasardb_facade::int_put(const std::string & alias, std::int64_t value)
 {
-    INVOKE(qdb_int_put, _handle, alias.c_str(), value, 0);
+    INVOKE(qdb_int_put, _handle, alias.c_str(), value, qdb_never_expires);
 }
 
-void quasardb_facade::int_update(const std::string & alias, std::int64_t value)
+bool quasardb_facade::int_update(const std::string & alias, std::int64_t value)
 {
-    INVOKE(qdb_int_update, _handle, alias.c_str(), value, 0);
+    return INVOKE(qdb_int_update, _handle, alias.c_str(), value, qdb_preserve_expiration) == qdb_e_ok_created;
 }
 
 std::int64_t quasardb_facade::int_get(const std::string & alias)

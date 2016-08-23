@@ -84,7 +84,7 @@ public:
     void remove(const std::string & alias);
 
     void blob_put(const std::string & alias, const std::string & content);
-    void blob_update(const std::string & alias, const std::string & content);
+    bool blob_update(const std::string & alias, const std::string & content);
     qdb_buffer blob_get(const std::string & alias);
     void blob_get_noalloc(const std::string & alias, std::string & content);
 
@@ -95,7 +95,7 @@ public:
 
     std::int64_t int_add(const std::string & alias, std::int64_t value);
     void int_put(const std::string & alias, std::int64_t value);
-    void int_update(const std::string & alias, std::int64_t value);
+    bool int_update(const std::string & alias, std::int64_t value);
     std::int64_t int_get(const std::string & alias);
 
     bool hset_contains(const std::string & alias, const std::string & content);
