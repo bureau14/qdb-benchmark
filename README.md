@@ -24,7 +24,7 @@ To use it, just copy `results.jsonp` in the `html_report/` folder and open `inde
 
 ## Basic usage
 
-    qdb-benchmark -c qdb://10.0.0.1:2836 --tests qdb_blob_put,qdb_blob_get --threads 1,2,4 --sizes 1K,1M
+    qdb-benchmark -c qdb://127.0.0.1:2836 --tests qdb_blob_put,qdb_blob_get --threads 1,2,4 --sizes 1K,1M
 
 This will run 12 tests:
 
