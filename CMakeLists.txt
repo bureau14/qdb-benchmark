@@ -72,13 +72,13 @@ add_test(help qdb-benchmark --tests qdb_blob_put --sizes 1M)
 
 if(EXISTS ${QDB_API_DLL})
     add_custom_command(TARGET qdb-benchmark POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different 
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
         ${QDB_API_DLL}
         $<TARGET_FILE_DIR:qdb-benchmark>)
 endif()
 
-set(CPACK_PACKAGE_VERSION "2.0.0")
-set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0) 
+set(CPACK_PACKAGE_VERSION "2.1.0")
+set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
 include(CPack)
 install(TARGETS qdb-benchmark
     RUNTIME DESTINATION bin
