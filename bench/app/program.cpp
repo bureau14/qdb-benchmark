@@ -26,15 +26,20 @@ void bench::app::program::prepare_schedule()
             config.thread_count = thread_count;
             if (test_class->size_dependent)
             {
-                for (auto content_size : _settings.content_sizes)
+                for (auto element_number : _settings.element_numbers)
                 {
-                    config.content_size = content_size;
-                    _schedule.emplace_back(create_test_instance(*test_class, config));
+                    config.element_number = element_number;
+                    for (auto content_size : _settings.content_sizes)
+                    {
+                        config.content_size = content_size;
+                        _schedule.emplace_back(create_test_instance(*test_class, config));
+                    }
                 }
             }
             else
             {
                 config.content_size = 0;
+                config.element_number = 0;
                 _schedule.emplace_back(create_test_instance(*test_class, config));
             }
         }

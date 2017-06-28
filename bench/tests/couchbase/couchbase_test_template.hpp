@@ -27,7 +27,14 @@ public:
 
     void setup() override
     {
-        _couchbase.connect(_cluster_uri);
+        if (_cluster_uri.compare("qdb://127.0.0.1:2836") == 0)
+        {
+            _couchbase.connect("couchbase://localhost/benchmark-mem");
+        }
+        else
+        {
+            _couchbase.connect(_cluster_uri);
+        }
     }
 
     static probe_collection create_probes(test_config cfg)

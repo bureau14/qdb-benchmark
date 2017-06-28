@@ -25,7 +25,7 @@ double compute_average_frequency(const test_instance & test)
 
 double compute_average_throughput(const test_instance & test)
 {
-    return compute_average_frequency(test) * test.config.content_size;
+    return compute_average_frequency(test) * test.config.content_size * test.config.element_number;
 }
 
 std::int64_t compute_iteration_count(const test_instance & test)

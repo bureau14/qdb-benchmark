@@ -1,5 +1,6 @@
 #pragma once
 
+#include <bench/tests/qdb/batch/blob_put.hpp>
 #include <bench/tests/qdb/blob/attach_tag.hpp>
 #include <bench/tests/qdb/blob/detach_tag.hpp>
 #include <bench/tests/qdb/blob/get.hpp>
@@ -26,8 +27,8 @@
 #include <bench/tests/qdb/tag/get_tagged.hpp>
 #include <bench/tests/qdb/tag/get_tags.hpp>
 #include <bench/tests/qdb/ts/col_blob_insert.hpp>
-#include <bench/tests/qdb/ts/col_double_insert.hpp>
 #include <bench/tests/qdb/ts/col_double_aggregate.hpp>
+#include <bench/tests/qdb/ts/col_double_insert.hpp>
 
 namespace bench
 {
@@ -39,6 +40,7 @@ namespace qdb
 template <typename OutputIt>
 void get_tests(OutputIt it)
 {
+    *it++ = new qdb::batch::blob_put::test_class();
     *it++ = new qdb::blob::attach_tag::test_class();
     *it++ = new qdb::blob::get::test_class();
     *it++ = new qdb::blob::get_noalloc::test_class();

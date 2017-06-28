@@ -15,6 +15,7 @@ struct settings
     std::string cluster_uri;
     std::vector<int> thread_counts;
     std::vector<std::size_t> content_sizes;
+    std::vector<std::size_t> element_numbers;
     test_class_collection tests;
     std::chrono::seconds pause;
     std::chrono::seconds duration;

@@ -1,5 +1,6 @@
 #pragma once
 
+#include <qdb/batch.h>
 #include <qdb/client.h>
 #include <qdb/stream.h>
 #include <qdb/ts.h>
@@ -85,6 +86,8 @@ public:
 
     void remove(const std::string & alias);
 
+    qdb_size_t run_batch(std::vector<qdb_operation_t> & operations);
+
     void blob_put(const std::string & alias, const std::string & content);
     bool blob_update(const std::string & alias, const std::string & content);
     qdb_buffer blob_get(const std::string & alias);
@@ -112,9 +115,18 @@ public:
     void get_tags(const std::string & alias);
 
     void ts_create(const std::string & alias, const std::vector<qdb_ts_column_info_t> & columns);
-    void ts_col_blob_insert(const std::string & alias, const std::string & col_name, const qdb_timespec_t & ts, const std::string & content);
-    void ts_col_double_insert(const std::string & alias, const std::string & col_name, const qdb_timespec_t & ts, double content);
-    void ts_col_double_inserts(const std::string & alias, const std::string & col_name, const qdb_ts_double_point * points, size_t count);
+    void ts_col_blob_insert(const std::string & alias,
+                            const std::string & col_name,
+                            const qdb_timespec_t & ts,
+                            const std::string & content);
+    void ts_col_double_insert(const std::string & alias,
+                              const std::string & col_name,
+                              const qdb_timespec_t & ts,
+                              double content);
+    void ts_col_double_inserts(const std::string & alias,
+                               const std::string & col_name,
+                               const qdb_ts_double_point * points,
+                               size_t count);
     void ts_col_double_average(const std::string & alias, const std::string & col_name, const qdb_ts_range_t & range);
 
     qdb_stream_t stream_open(const std::string & alias, qdb_stream_mode_t mode);

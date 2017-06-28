@@ -23,6 +23,8 @@ public:
 
     void remove(const std::string & alias);
 
+    void run_batch(const std::vector<lcb_CMDSTORE> & cmds);
+
     void blob_put(const std::string & alias, const std::string & content);
     void blob_update(const std::string & alias, const std::string & content);
     std::string blob_get(const std::string & alias);
