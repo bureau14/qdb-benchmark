@@ -9,6 +9,7 @@ find_package(Boost COMPONENTS regex system thread)
 find_package(Threads)
 
 add_subdirectory(thirdparty/ArduinoJson/src)
+add_subdirectory(thirdparty/boost)
 add_subdirectory(thirdparty/cassandra)
 add_subdirectory(thirdparty/cppformat)
 add_subdirectory(thirdparty/mongodb)

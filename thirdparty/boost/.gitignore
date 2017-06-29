@@ -1,0 +1,13 @@
+/*.exe
+/b2
+/bjam
+/more/
+/stage/
+/stage64/
+/tools/build/src/engine/bin*
+/tools/build/src/engine/bootstrap
+bin.v2/
+bootstrap.log
+doc/
+project-config.jam
+project-config.jam.*
