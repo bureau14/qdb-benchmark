@@ -47,7 +47,7 @@ public:
     std::string get_string(const std::string & short_syntax,
                            const std::string & long_syntax,
                            const std::string & description,
-                           const std::string & default_value)
+                           const std::string & default_value = "")
     {
         auto value = find(short_syntax, long_syntax, description, default_value);
         if (value == _args.end()) return default_value;
@@ -145,7 +145,7 @@ private:
                                           const std::string & description,
                                           const std::string & default_value)
     {
-        _help << "  " << std::left << std::setw(3) << short_syntax << std::setw(12) << long_syntax << ' ';
+        _help << "  " << std::left << std::setw(3) << short_syntax << std::setw(25) << long_syntax << ' ';
 
         if (default_value.empty())
         {

@@ -121,6 +121,13 @@ void bench::app::command_line::parse(int argc, const char ** argv)
     _settings.snmp_peers = parser.get_strings("", "--snmp", "Set SNMP peer names", "");
 #endif
     _settings.thread_counts = parser.get_integers("", "--threads", "Set number of threads", "1,2,4");
+
+    _settings.user_credentials_file =
+        parser.get_string("", "--user-credentials-file",
+                          "Path to the file containing the user's name and secret key used for connection");
+    _settings.cluster_public_file = parser.get_string(
+        "", "--cluster-public-file", "Path to the file containing the public key of the cluster to connect to");
+
     parser.get_updatable_values<const test_class *>(
         "", "--tests", "Select the tests to run", "*", _settings.tests,
         [this](const std::string & name, decltype(_settings.tests) & tests) {
