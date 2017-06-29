@@ -20,6 +20,7 @@ add_subdirectory(thirdparty/couchbase)
 if(NOT MSVC)
     add_compile_options(-Wall -pedantic)
 endif()
+add_compile_options(-O3)
 
 if(CMAKE_COMPILER_IS_GNUCXX)
     # Force static build

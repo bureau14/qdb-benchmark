@@ -82,7 +82,7 @@ void couchbase_facade::connect(const std::string & cluster_uri)
     crst.version = 3;
     crst.v.v3.connstr = cluster_uri.c_str();
     crst.v.v3.username = "admin";
-    crst.v.v3.passwd = "\\'admin'\\";
+    crst.v.v3.passwd = "#'admin'#";
 
     auto err = lcb_create(&_instance, &crst);
     if (err != LCB_SUCCESS)
