@@ -26,8 +26,10 @@
 #include <bench/tests/qdb/tag/get_tagged.hpp>
 #include <bench/tests/qdb/tag/get_tags.hpp>
 #include <bench/tests/qdb/ts/col_blob_insert.hpp>
-#include <bench/tests/qdb/ts/col_double_insert.hpp>
 #include <bench/tests/qdb/ts/col_double_aggregate.hpp>
+#include <bench/tests/qdb/ts/col_double_aggregate_part.hpp>
+#include <bench/tests/qdb/ts/col_double_insert.hpp>
+#include <bench/tests/qdb/ts/multicolumns_double_insert.hpp>
 
 namespace bench
 {
@@ -67,6 +69,8 @@ void get_tests(OutputIt it)
     *it++ = new qdb::ts::col_blob_insert::test_class();
     *it++ = new qdb::ts::col_double_insert::test_class();
     *it++ = new qdb::ts::col_double_average::test_class();
+    *it++ = new qdb::ts::col_double_average_part::test_class();
+    *it++ = new qdb::ts::multicolumns_double_insert::test_class();
 }
 
 } // namespace qdb

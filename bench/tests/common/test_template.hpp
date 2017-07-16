@@ -38,7 +38,7 @@ public:
         return {};
     }
 
-    test_template(test_config config) : _config(config), _prepared_iterations(0)
+    test_template(test_config config) : _config(config), _prepared_iterations(config.iterations)
     {
     }
 

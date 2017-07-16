@@ -24,6 +24,7 @@ void bench::app::program::prepare_schedule()
         for (auto thread_count : _settings.thread_counts)
         {
             config.thread_count = thread_count;
+            config.iterations = _settings.iterations / thread_count;
             if (test_class->size_dependent)
             {
                 for (auto content_size : _settings.content_sizes)

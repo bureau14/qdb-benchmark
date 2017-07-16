@@ -10,3 +10,9 @@
 
 # SublimeText
 sftp-config*.json
+
+# visual studio code
+.vscode*
+
+# clang ignore
+.clang-tidy

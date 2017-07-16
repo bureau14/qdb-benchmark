@@ -1,9 +1,11 @@
 set(FILES
     command_line.hpp
     detailed_error.hpp
+    flex_barrier.hpp
     memory.hpp
     random.cpp
     random.hpp
+    static_unique_pointer_cast.hpp
     teamcity.cpp
     teamcity.hpp
     unique_alias.cpp

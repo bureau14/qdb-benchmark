@@ -260,7 +260,10 @@ void quasardb_facade::ts_create(const std::string & alias, const std::vector<qdb
     INVOKE(qdb_ts_create, _handle, alias.c_str(), columns.data(), columns.size());
 }
 
-void quasardb_facade::ts_col_blob_insert(const std::string & alias, const std::string & col_name,  const qdb_timespec_t & ts, const std::string & content)
+void quasardb_facade::ts_col_blob_insert(const std::string & alias,
+                                         const std::string & col_name,
+                                         const qdb_timespec_t & ts,
+                                         const std::string & content)
 {
     qdb_ts_blob_point bp;
 
@@ -271,7 +274,10 @@ void quasardb_facade::ts_col_blob_insert(const std::string & alias, const std::s
     INVOKE(qdb_ts_blob_insert, _handle, alias.c_str(), col_name.c_str(), &bp, 1);
 }
 
-void quasardb_facade::ts_col_double_insert(const std::string & alias, const std::string & col_name,  const qdb_timespec_t & ts, double content)
+void quasardb_facade::ts_col_double_insert(const std::string & alias,
+                                           const std::string & col_name,
+                                           const qdb_timespec_t & ts,
+                                           double content)
 {
     qdb_ts_double_point dp;
 
@@ -281,12 +287,17 @@ void quasardb_facade::ts_col_double_insert(const std::string & alias, const std:
     ts_col_double_inserts(alias, col_name, &dp, 1);
 }
 
-void quasardb_facade::ts_col_double_inserts(const std::string & alias, const std::string & col_name,  const qdb_ts_double_point * points, size_t count)
+void quasardb_facade::ts_col_double_inserts(const std::string & alias,
+                                            const std::string & col_name,
+                                            const qdb_ts_double_point * points,
+                                            size_t count)
 {
     INVOKE(qdb_ts_double_insert, _handle, alias.c_str(), col_name.c_str(), points, count);
 }
 
-void quasardb_facade::ts_col_double_average(const std::string & alias, const std::string & col_name,  const qdb_ts_range_t & range)
+void quasardb_facade::ts_col_double_average(const std::string & alias,
+                                            const std::string & col_name,
+                                            const qdb_ts_range_t & range)
 {
     qdb_ts_double_aggregation_t agg;
 

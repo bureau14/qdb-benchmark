@@ -1,8 +1,8 @@
 #pragma once
 
 #include <algorithm>
-#include <iterator>
 #include <iomanip>
+#include <iterator>
 #include <list>
 #include <sstream>
 #include <string>
@@ -30,13 +30,10 @@ public:
     void check_unknown()
     {
         if (!_args.empty())
-            throw std::runtime_error("Command line argument \"" + *_args.begin()
-                                     + "\" is not supported");
+            throw std::runtime_error("Command line argument \"" + *_args.begin() + "\" is not supported");
     }
 
-    bool get_flag(const std::string & short_syntax,
-                  const std::string & long_syntax,
-                  const std::string & description)
+    bool get_flag(const std::string & short_syntax, const std::string & long_syntax, const std::string & description)
     {
         auto it = find(short_syntax, long_syntax, description, "");
         if (it == _args.end()) return false;
@@ -111,6 +108,21 @@ public:
     }
 
     template <typename Value, typename Selector>
+    Value get_value(const std::string & short_syntax,
+                    const std::string & long_syntax,
+                    const std::string & description,
+                    const std::string & default_value,
+                    Selector selector)
+    {
+        Value value;
+        std::string arg = get_string(short_syntax, long_syntax, description, default_value);
+
+        value = selector(arg)[0];
+
+        return value;
+    }
+
+    template <typename Value, typename Selector>
     std::vector<Value> get_values(const std::string & short_syntax,
                                   const std::string & long_syntax,
                                   const std::string & description,
@@ -134,9 +146,8 @@ public:
                                   const std::string & description,
                                   const std::string & default_value)
     {
-        return get_values<int>(
-            short_syntax, long_syntax, description, default_value,
-            [](const std::string & s) { return std::vector<int>{std::stoi(s)}; });
+        return get_values<int>(short_syntax, long_syntax, description, default_value,
+                               [](const std::string & s) { return std::vector<int>{std::stoi(s)}; });
     }
 
 private:
@@ -159,10 +170,8 @@ private:
         _help << description;
         _help << std::endl;
 
-        return std::find_if(_args.begin(), _args.end(), [&](const std::string & arg)
-                            {
-                                return arg == short_syntax || arg == long_syntax;
-                            });
+        return std::find_if(_args.begin(), _args.end(),
+                            [&](const std::string & arg) { return arg == short_syntax || arg == long_syntax; });
     }
 
     template <typename Function>
