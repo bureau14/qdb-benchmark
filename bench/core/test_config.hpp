@@ -11,7 +11,7 @@ struct test_config
     std::string cluster_uri;
     std::size_t content_size;
     bool no_cleanup;
-    int thread_count;
+    std::size_t thread_count;
     std::chrono::seconds duration;
 };
 

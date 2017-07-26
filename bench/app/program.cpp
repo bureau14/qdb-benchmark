@@ -1,15 +1,13 @@
 #include "program.hpp"
-#include <bench/app/command_line.hpp>
+#include <bench/app/options.hpp>
 #include <bench/framework/test_runner.hpp>
-#include <bench/report/jsonp.hpp>
-#include <algorithm>
-#include <iostream>
 #include <thread>
 
 void bench::app::program::parse_command_line(int argc, const char ** argv)
 {
-    command_line parser(_test_pool, _settings);
-    parser.parse(argc, argv);
+    options opts(_test_pool);
+    opts.parse(argc, argv);
+    opts.fill_settings(_settings);
 }
 
 void bench::app::program::prepare_schedule()

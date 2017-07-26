@@ -2,10 +2,17 @@ cmake_minimum_required(VERSION 3.2)
 project(qdb-benchmark)
 enable_testing()
 
-set(CMAKE_CXX_STANDARD 11)
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules)
+set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
-set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost COMPONENTS regex system thread)
+set(CMAKE_CXX_STANDARD 14)
+
+if(MSVC)
+    add_definitions(
+        /DBOOST_ALL_NO_LIB # Disable auto-link.
+    )
+endif()
+
 find_package(Threads)
 
 add_subdirectory(thirdparty/ArduinoJson/src)
@@ -26,6 +33,7 @@ if(CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 include_directories(${CMAKE_SOURCE_DIR})
+include_directories("${CMAKE_SOURCE_DIR}/thirdparty/boost")
 add_subdirectory(bench/app)
 add_subdirectory(bench/core)
 add_subdirectory(bench/framework)
@@ -89,3 +97,5 @@ install(TARGETS qdb-benchmark
 install(DIRECTORY html_report
     DESTINATION share/qdb-benchmark
 )
+
+include(ide_folders)

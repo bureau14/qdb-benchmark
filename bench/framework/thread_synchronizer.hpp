@@ -16,11 +16,11 @@ class thread_synchronizer
 public:
     typedef void (Thread::*action_type)(void);
 
-    thread_synchronizer() : _cycle(0), _workers(0), _ready_workers(0)
+    thread_synchronizer() : _cycle{0}, _workers{0}, _ready_workers{0}
     {
     }
 
-    void reset(int worker_count)
+    void reset(std::size_t worker_count)
     {
         _cycle = 0;
         _workers = worker_count;
@@ -61,7 +61,7 @@ public:
     {
         std::unique_lock<std::mutex> lock(_mutex);
         _ready_workers++;
-        int next_cycle = _cycle + 1;
+        std::size_t next_cycle = _cycle + 1;
         lock.unlock();
         _cv.notify_all();
         lock.lock();
@@ -97,8 +97,8 @@ public:
     }
 
 private:
-    int _cycle;
-    int _workers, _ready_workers;
+    std::size_t _cycle;
+    std::size_t _workers, _ready_workers;
     action_type _order;
     std::mutex _mutex;
     std::condition_variable _cv;
