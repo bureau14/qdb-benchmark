@@ -5,6 +5,7 @@ enable_testing()
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
+# Need c++14 for std::make_unique
 set(CMAKE_CXX_STANDARD 14)
 
 if(MSVC)
@@ -12,6 +13,7 @@ if(MSVC)
         /DBOOST_ALL_NO_LIB # Disable auto-link.
     )
 endif()
+set(Boost_USE_STATIC_LIBS ON)
 
 find_package(Threads)
 
@@ -22,6 +24,7 @@ add_subdirectory(thirdparty/cppformat)
 add_subdirectory(thirdparty/mongodb)
 add_subdirectory(thirdparty/netsnmp)
 add_subdirectory(thirdparty/quasardb)
+add_subdirectory(thirdparty/couchbase)
 
 if(NOT MSVC)
     add_compile_options(-Wall -pedantic)
@@ -41,6 +44,7 @@ add_subdirectory(bench/log)
 add_subdirectory(bench/report)
 add_subdirectory(bench/tests/dummy)
 add_subdirectory(bench/tests/cassandra)
+add_subdirectory(bench/tests/couchbase)
 add_subdirectory(bench/tests/mongodb)
 add_subdirectory(bench/tests/qdb)
 add_subdirectory(bench/tests/std)
@@ -68,6 +72,11 @@ target_link_libraries(qdb-benchmark
 )
 if (TARGET bench-tests-cassandra)
     target_link_libraries(qdb-benchmark bench-tests-cassandra)
+endif()
+if (TARGET bench-tests-couchbase)
+    target_link_libraries(qdb-benchmark bench-tests-couchbase
+    ssl
+    crypto)
 endif()
 if (TARGET bench-tests-mongodb)
     target_link_libraries(qdb-benchmark bench-tests-mongodb)

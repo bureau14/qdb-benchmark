@@ -4,6 +4,7 @@ set(FILES
     memory.hpp
     random.cpp
     random.hpp
+    static_unique_pointer_cast.hpp
     teamcity.cpp
     teamcity.hpp
     unique_alias.cpp

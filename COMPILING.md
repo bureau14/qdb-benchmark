@@ -28,6 +28,7 @@ Pick the desired version from https://download.quasardb.net/quasardb
 
 ## Building
 
+    git submodule update --init --recursive
     mkdir $HOME/qdb-benchmark/build
     cd $HOME/qdb-benchmark/build
     cmake -DCMAKE_BUILD_TYPE=Release ..

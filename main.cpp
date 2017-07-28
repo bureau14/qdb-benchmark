@@ -6,6 +6,9 @@
 #if BENCHMARK_CASSANDRA
 #include <bench/tests/cassandra/cassandra_tests.hpp>
 #endif
+#if BENCHMARK_COUCHBASE
+#include <bench/tests/couchbase/couchbase_tests.hpp>
+#endif
 #if BENCHMARK_MONGODB
 #include <bench/tests/mongodb/mongodb_tests.hpp>
 #endif
@@ -35,6 +38,9 @@ static bench::test_class_collection get_tests()
 #endif
 #if BENCHMARK_CASSANDRA
     bench::tests::cassandra::get_tests(std::back_inserter(result));
+#endif
+#if BENCHMARK_COUCHBASE
+    bench::tests::couchbase::get_tests(std::back_inserter(result));
 #endif
 #if BENCHMARK_MONGODB
     bench::tests::mongodb::get_tests(std::back_inserter(result));
