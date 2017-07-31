@@ -38,7 +38,7 @@ public:
         return {};
     }
 
-    test_template(test_config config) : _config(config), _prepared_iterations(0)
+    test_template(test_config config) : _config(config), _prepared_iterations(config.iterations)
     {
     }
 
@@ -71,10 +71,20 @@ protected:
     template <typename Function>
     void setup_each(Function function)
     {
-        clock::time_point timeout = clock::now() + _config.duration;
-        while (clock::now() < timeout)
+        if (_prepared_iterations != 0)
         {
-            function(_prepared_iterations++);
+            for (auto iteration = std::size_t(0); iteration < _prepared_iterations; ++iteration)
+            {
+                function(iteration);
+            }
+        }
+        else
+        {
+            clock::time_point timeout = clock::now() + _config.duration;
+            while (clock::now() < timeout)
+            {
+                function(_prepared_iterations++);
+            }
         }
     }
 

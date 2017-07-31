@@ -1,5 +1,4 @@
 set(FILES
-    command_line.hpp
     detailed_error.hpp
     memory.hpp
     random.cpp

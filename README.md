@@ -82,11 +82,19 @@ Most tests (for example `qdb_blob_put`) have different results depending on the 
 
 The default value is `1,1K,1M`, therefore running each test 3 times: a first time with an input of 1 byte, then with 1 kilobyte and a last time with 1 megabyte.
 
+#### `--iterations` or `-i`
+
+Sets the number of iterations done for each test.
+
+It silences the (default) duration option.
+
+The default value is `0`, meaning it's not active and the tests will run until the specified duration has elapsed.
+
 #### `--tests`
 
 Sets the names of the tests to run. You can use `*` at the beginning or end of a test name to select multiple tests at once.
 
-To know the list of supported tests, just run `qdb-benchmark --help`.
+To know the list of supported tests, just run `qdb-benchmark --help` or `qdb-benchmark --show-tests`.
 
 The current list of supported tests is:
 

@@ -22,18 +22,22 @@ void bench::app::program::prepare_schedule()
         for (auto thread_count : _settings.thread_counts)
         {
             config.thread_count = thread_count;
-            if (test_class->size_dependent)
+            for (auto iteration_count : _settings.iteration_counts)
             {
-                for (auto content_size : _settings.content_sizes)
+                config.iterations = iteration_count / thread_count;
+                if (test_class->size_dependent)
                 {
-                    config.content_size = content_size;
+                    for (auto content_size : _settings.content_sizes)
+                    {
+                        config.content_size = content_size;
+                        _schedule.emplace_back(create_test_instance(*test_class, config));
+                    }
+                }
+                else
+                {
+                    config.content_size = 0;
                     _schedule.emplace_back(create_test_instance(*test_class, config));
                 }
-            }
-            else
-            {
-                config.content_size = 0;
-                _schedule.emplace_back(create_test_instance(*test_class, config));
             }
         }
     }

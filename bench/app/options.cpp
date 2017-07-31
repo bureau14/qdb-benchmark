@@ -13,6 +13,10 @@ struct content_sizes
 {
     std::vector<std::size_t> values;
 };
+struct suffixed_numbers
+{
+    std::vector<std::size_t> values;
+};
 struct thread_counts
 {
     std::vector<std::size_t> values;
@@ -35,6 +39,8 @@ void bench::app::options::init()
              "Set the duration of each test, in seconds")
         ("sizes", po::value<content_sizes>()->default_value({{1, 1 << 10, 1 << 20}}, "1,1k,1M"),
              "Set contents sizes, in bytes")
+        ("iterations,i", po::value<suffixed_numbers>()->default_value({{0}}, "0"),
+             "Set the number of iterations of each test (overrides duration)")
         ("threads", po::value<thread_counts>()->default_value({{1, 2, 4}}, "1,2,4"),
              "Set contents sizes, in bytes")
         ("user-credentials-file", po::value<std::string>()->default_value(""),
@@ -101,6 +107,7 @@ void bench::app::options::fill_settings(settings & settings)
     settings.pause = std::chrono::seconds(get_value<std::size_t>("pause"));
     settings.duration = std::chrono::seconds(get_value<std::size_t>("duration"));
     settings.content_sizes = get_value<content_sizes>("sizes").values;
+    settings.iteration_counts = get_value<suffixed_numbers>("iterations").values;
     if (_vmap.count("no-cleanup"))
     {
         settings.no_cleanup = true;
@@ -226,29 +233,62 @@ std::size_t parse_size(const std::string & str_size)
     }
 }
 
-void tokenize(const std::string & str, std::vector<std::size_t> & tokens, const std::string & delimiters = ",")
+std::size_t parse_number(const std::string & str_size)
+{
+    switch (str_size.back())
+    {
+    case 'K':
+    case 'k':
+        return std::size_t(std::stoi(str_size) * 1'000);
+
+    case 'M':
+    case 'm':
+        return std::size_t(std::stoi(str_size) * 1'000'000);
+
+    case 'G':
+    case 'g':
+        return std::size_t(std::stoi(str_size) * 1'000'000'000);
+
+    default:
+        return std::size_t(std::stoi(str_size));
+    }
+}
+
+template <typename Function>
+void tokenize(const std::string & str,
+              std::vector<std::size_t> & tokens,
+              Function & parse_method,
+              const std::string & delimiters = ",")
 {
     std::string::size_type lastPos = str.find_first_not_of(delimiters, 0);
     std::string::size_type pos = str.find_first_of(delimiters, lastPos);
     while (std::string::npos != pos || std::string::npos != lastPos)
     {
-        tokens.push_back(parse_size(str.substr(lastPos, pos - lastPos)));
+        tokens.push_back(parse_method(str.substr(lastPos, pos - lastPos)));
         lastPos = str.find_first_not_of(delimiters, pos);
         pos = str.find_first_of(delimiters, lastPos);
     }
 }
+
 std::istream & operator>>(std::istream & in, content_sizes & value)
 {
     std::string token;
     in >> token;
-    tokenize(token, value.values);
+    tokenize(token, value.values, parse_size);
+    return in;
+}
+std::istream & operator>>(std::istream & in, suffixed_numbers & value)
+{
+    std::string token;
+    in >> token;
+    tokenize(token, value.values, parse_number);
     return in;
 }
 std::istream & operator>>(std::istream & in, thread_counts & value)
 {
     std::string token;
     in >> token;
-    tokenize(token, value.values);
+    tokenize(token, value.values, parse_number);
     return in;
 }
 } // namespace app

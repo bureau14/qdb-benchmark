@@ -30,7 +30,7 @@ void test_runner::create_threads()
 {
     _synchronizer.reset(_test->config.thread_count);
 
-    for (auto i = 0; i < _test->config.thread_count; i++)
+    for (auto i = std::size_t(0); i < _test->config.thread_count; i++)
     {
         _threads.emplace_back(new test_thread(*_test, _synchronizer));
     }
