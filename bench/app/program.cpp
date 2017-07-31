@@ -62,6 +62,7 @@ void bench::app::program::run_scheduled_tests()
         _logger.pause(_settings.pause);
         std::this_thread::sleep_for(_settings.pause);
     }
+    _synthesis_report.write_synthesis(_schedule);
 
     const auto test_count = _schedule.size();
     _logger.summary(success_count, test_count);

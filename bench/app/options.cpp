@@ -269,7 +269,6 @@ void tokenize(const std::string & str,
         pos = str.find_first_of(delimiters, lastPos);
     }
 }
-
 std::istream & operator>>(std::istream & in, content_sizes & value)
 {
     std::string token;

@@ -1,3 +1,4 @@
+#include <bench/core/computations.hpp>
 #include <bench/report/jsonp.hpp>
 #include <ArduinoJson.h>
 #include <algorithm>
@@ -76,4 +77,32 @@ void bench::report::jsonp::add_test(const bench::test_instance & test)
     write_series(root.createNestedObject("series"), test.result.begin(), test.result.end(), test.start_time);
 
     _file << "addTestResult(" << root << ");" << std::endl;
+}
+
+void bench::report::jsonp::write_synthesis(const bench::test_instance_collection & tests)
+{
+    DynamicJsonBuffer jsonBuffer;
+    JsonObject & root = jsonBuffer.createObject();
+    JsonArray & array = jsonBuffer.createArray();
+    for (const auto & test : tests)
+    {
+        JsonObject & object = jsonBuffer.createObject();
+        object["name"] = test.tclass.name.c_str();
+        object["description"] = test.tclass.description.c_str();
+        object["content_size"] = test.config.content_size;
+        object["thread_count"] = test.config.thread_count;
+        if (test.errors.empty())
+        {
+            object["avg_throughput"] = compute_average_throughput(test);
+            object["avg_frequency"] = compute_average_frequency(test);
+        }
+        else
+        {
+            object["avg_throughput"] = -1;
+            object["avg_frequency"] = -1;
+        }
+        array.add(object);
+    }
+    root["test"] = array;
+    _file << root << std::endl;
 }

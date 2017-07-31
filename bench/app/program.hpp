@@ -14,7 +14,8 @@ namespace app
 class program
 {
 public:
-    program(log::logger & logger, test_class_collection test_pool) : _logger(logger), _test_pool(test_pool)
+    program(log::logger & logger, test_class_collection test_pool)
+        : _logger(logger), _test_pool(test_pool), _synthesis_report("synthesis_report.json")
     {
     }
 
@@ -36,6 +37,7 @@ private:
     test_class_collection _test_pool;
     test_instance_collection _schedule;
     report::jsonp _report;
+    report::jsonp _synthesis_report;
 };
 
 } // namespace app
