@@ -16,12 +16,22 @@ namespace qdb
 class node_status : public probe
 {
 public:
-    node_status(std::string cluster_uri) : _cluster_uri(cluster_uri)
+    node_status(std::string cluster_uri, std::string cluster_public_file = "", std::string user_credentials_file = "")
+        : _cluster_uri(cluster_uri), _cluster_key(cluster_public_file), _user_config(user_credentials_file)
     {
     }
 
     void setup() override
     {
+        if (_cluster_key != "")
+        {
+            _quasardb.set_cluster_security(_cluster_key);
+        }
+        if (_user_config != "")
+        {
+            _quasardb.set_user_security(_user_config);
+        }
+
         for (auto node = first_node(); !has_node(node); node = get_successor(node))
         {
             add_node(node);
@@ -97,6 +107,8 @@ private:
     }
 
     std::string _cluster_uri;
+    std::string _cluster_key;
+    std::string _user_config;
     quasardb_facade _quasardb;
     std::vector<std::string> _node_uris;
 };

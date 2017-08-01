@@ -20,8 +20,8 @@ struct settings
     std::chrono::seconds pause;
     std::chrono::seconds duration;
 
-    std::string user_credentials_file;
     std::string cluster_public_file;
+    std::string user_credentials_file;
 
     bool no_cleanup;
 

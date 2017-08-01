@@ -1,6 +1,8 @@
 #include <bench/tests/qdb/quasardb_facade.hpp>
 #include <utils/detailed_error.hpp>
 #include <utils/invocation_string.hpp>
+#include <ArduinoJson.h>
+#include <fstream>
 #ifdef _WIN32
 #include <utils/win32.hpp>
 #endif
@@ -83,6 +85,27 @@ quasardb_facade::~quasardb_facade()
 void quasardb_facade::connect(const std::string & cluster_uri)
 {
     INVOKE(qdb_connect, _handle, cluster_uri.c_str());
+}
+
+void quasardb_facade::set_cluster_security(const std::string & cluster_public_file)
+{
+    std::ifstream f(cluster_public_file);
+    auto key = std::string((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+
+    INVOKE(qdb_option_set_cluster_public_key, _handle, key.c_str());
+}
+
+void quasardb_facade::set_user_security(const std::string & user_credentials_file)
+{
+    std::ifstream f(user_credentials_file);
+    auto user = std::string((std::istreambuf_iterator<char>(f)), std::istreambuf_iterator<char>());
+
+    StaticJsonBuffer<200> jsonBuffer;
+
+    JsonObject & root = jsonBuffer.parseObject(user.c_str());
+    auto username = root["username"];
+    auto password = root["secret_key"];
+    INVOKE(qdb_option_set_user_credentials, _handle, username, password);
 }
 
 void quasardb_facade::close()
@@ -260,7 +283,10 @@ void quasardb_facade::ts_create(const std::string & alias, const std::vector<qdb
     INVOKE(qdb_ts_create, _handle, alias.c_str(), columns.data(), columns.size());
 }
 
-void quasardb_facade::ts_col_blob_insert(const std::string & alias, const std::string & col_name,  const qdb_timespec_t & ts, const std::string & content)
+void quasardb_facade::ts_col_blob_insert(const std::string & alias,
+                                         const std::string & col_name,
+                                         const qdb_timespec_t & ts,
+                                         const std::string & content)
 {
     qdb_ts_blob_point bp;
 
@@ -271,7 +297,10 @@ void quasardb_facade::ts_col_blob_insert(const std::string & alias, const std::s
     INVOKE(qdb_ts_blob_insert, _handle, alias.c_str(), col_name.c_str(), &bp, 1);
 }
 
-void quasardb_facade::ts_col_double_insert(const std::string & alias, const std::string & col_name,  const qdb_timespec_t & ts, double content)
+void quasardb_facade::ts_col_double_insert(const std::string & alias,
+                                           const std::string & col_name,
+                                           const qdb_timespec_t & ts,
+                                           double content)
 {
     qdb_ts_double_point dp;
 
@@ -281,12 +310,17 @@ void quasardb_facade::ts_col_double_insert(const std::string & alias, const std:
     ts_col_double_inserts(alias, col_name, &dp, 1);
 }
 
-void quasardb_facade::ts_col_double_inserts(const std::string & alias, const std::string & col_name,  const qdb_ts_double_point * points, size_t count)
+void quasardb_facade::ts_col_double_inserts(const std::string & alias,
+                                            const std::string & col_name,
+                                            const qdb_ts_double_point * points,
+                                            size_t count)
 {
     INVOKE(qdb_ts_double_insert, _handle, alias.c_str(), col_name.c_str(), points, count);
 }
 
-void quasardb_facade::ts_col_double_average(const std::string & alias, const std::string & col_name,  const qdb_ts_range_t & range)
+void quasardb_facade::ts_col_double_average(const std::string & alias,
+                                            const std::string & col_name,
+                                            const qdb_ts_range_t & range)
 {
     qdb_ts_double_aggregation_t agg;
 

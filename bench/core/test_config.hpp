@@ -14,6 +14,9 @@ struct test_config
     bool no_cleanup;
     std::size_t thread_count;
     std::chrono::seconds duration;
+
+    std::string cluster_public_file;
+    std::string user_credentials_file;
 };
 
 } // namespace bench

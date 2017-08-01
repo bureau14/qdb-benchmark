@@ -16,6 +16,8 @@ void bench::app::program::prepare_schedule()
     config.cluster_uri = _settings.cluster_uri;
     config.duration = _settings.duration;
     config.no_cleanup = _settings.no_cleanup;
+    config.cluster_public_file = _settings.cluster_public_file;
+    config.user_credentials_file = _settings.user_credentials_file;
 
     for (auto & test_class : _settings.tests)
     {
