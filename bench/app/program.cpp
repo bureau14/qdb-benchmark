@@ -18,6 +18,7 @@ void bench::app::program::prepare_schedule()
     config.no_cleanup = _settings.no_cleanup;
     config.cluster_public_file = _settings.cluster_public_file;
     config.user_credentials_file = _settings.user_credentials_file;
+    config.encryption_algorithm = _settings.encryption_algorithm;
 
     for (auto & test_class : _settings.tests)
     {

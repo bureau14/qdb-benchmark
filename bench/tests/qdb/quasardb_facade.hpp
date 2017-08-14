@@ -1,9 +1,11 @@
 #pragma once
 
 #include <qdb/client.h>
+#include <qdb/option.h>
 #include <qdb/stream.h>
 #include <qdb/ts.h>
 #include <cstdint>
+#include <map>
 #include <stdexcept>
 #include <string>
 #include <vector>
@@ -79,6 +81,7 @@ public:
     void close();
     void set_cluster_security(const std::string & cluster_public_file);
     void set_user_security(const std::string & user_credentials_file);
+    void set_encryption(const std::string & encryption_algorithm);
     void trim_all(int timeout);
 
     std::string node_status(const std::string & node_uri) const;
@@ -132,6 +135,9 @@ public:
 
 private:
     qdb_handle_t _handle;
+
+private:
+    static const std::map<std::string, qdb_encryption_t> _encrypt_map;
 };
 
 } // namespace qdb
