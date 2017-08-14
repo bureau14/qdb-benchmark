@@ -19,6 +19,7 @@
 #include <cerrno>
 #include <cstring>
 #endif
+#include <iostream>
 
 using namespace bench::tests::qdb;
 
@@ -72,6 +73,9 @@ static qdb_error_t named_invoke(const char * name, Function function, Args &&...
     return err;
 }
 
+const std::map<std::string, qdb_encryption_t> quasardb_facade::_encrypt_map = {
+    {"", qdb_crypt_none}, {"none", qdb_crypt_none}, {"aes_gcm_256", qdb_crypt_aes_gcm_256}};
+
 quasardb_facade::quasardb_facade()
 {
     _handle = qdb_open_tcp();
@@ -106,6 +110,15 @@ void quasardb_facade::set_user_security(const std::string & user_credentials_fil
     auto username = root["username"];
     auto password = root["secret_key"];
     INVOKE(qdb_option_set_user_credentials, _handle, username, password);
+}
+
+void quasardb_facade::set_encryption(const std::string & encryption_algorithm)
+{
+    const auto & it_encrypt_option = _encrypt_map.find(encryption_algorithm);
+    if (it_encrypt_option != _encrypt_map.cend())
+    {
+        INVOKE(qdb_option_set_encryption, _handle, it_encrypt_option->second);
+    }
 }
 
 void quasardb_facade::close()

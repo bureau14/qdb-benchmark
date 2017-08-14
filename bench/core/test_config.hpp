@@ -17,6 +17,7 @@ struct test_config
 
     std::string cluster_public_file;
     std::string user_credentials_file;
+    std::string encryption_algorithm;
 };
 
 } // namespace bench

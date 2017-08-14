@@ -45,8 +45,10 @@ void bench::app::options::init()
              "Set contents sizes, in bytes")
         ("user-credentials-file", po::value<std::string>()->default_value(""),
             "Path to the file containing the user's name and secret key used for connection")
-        ("cluster-public-file", po::value<std::string>()->default_value(""),
-            "Path to the file containing the public key of the cluster to connect to ")
+        ("cluster-public-key-file", po::value<std::string>()->default_value(""),
+            "Path to the file containing the public key of the cluster to connect to")
+        ("encrypt", po::value<std::string>()->default_value(""),
+            "Encrypt the data sent to the server with the provided algorithm")
         ("tests", po::value<std::string>(), "Select the tests to run");
 // clang-format on
 
@@ -120,7 +122,8 @@ void bench::app::options::fill_settings(settings & settings)
 #endif
     settings.thread_counts = get_value<thread_counts>("threads").values;
     settings.user_credentials_file = get_value<std::string>("user-credentials-file");
-    settings.cluster_public_file = get_value<std::string>("cluster-public-file");
+    settings.cluster_public_file = get_value<std::string>("cluster-public-key-file");
+    settings.encryption_algorithm = get_value<std::string>("encrypt");
     settings.tests = parse_tests();
 }
 

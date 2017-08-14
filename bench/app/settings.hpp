@@ -22,6 +22,7 @@ struct settings
 
     std::string cluster_public_file;
     std::string user_credentials_file;
+    std::string encryption_algorithm;
 
     bool no_cleanup;
 
