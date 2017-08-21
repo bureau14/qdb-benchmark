@@ -1,4 +1,5 @@
 #include <bench/tests/qdb/quasardb_facade.hpp>
+#include <utils/fatal_error.hpp>
 #include <utils/invocation_string.hpp>
 #include <ArduinoJson.h>
 #include <fstream>
@@ -18,7 +19,6 @@
 #include <cerrno>
 #include <cstring>
 #endif
-#include <iostream>
 
 using namespace bench::tests::qdb;
 
@@ -49,7 +49,14 @@ static qdb_error_t named_invoke(const char * name, Function function, Args &&...
             error_str += fmt::format(" && system returned [{}, {}]", errno, std::strerror(errno));
 #endif
         }
-        throw std::runtime_error(error_str);
+        if (QDB_ERROR_SEVERITY(err) == qdb_e_severity_unrecoverable)
+        {
+            throw utils::fatal_error(error_str);
+        }
+        else
+        {
+            throw std::runtime_error(error_str);
+        }
     }
     return err;
 }

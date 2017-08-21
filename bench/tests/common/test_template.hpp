@@ -1,6 +1,7 @@
 #pragma once
 
 #include <bench/core/test_class.hpp>
+#include <utils/fatal_error.hpp>
 #include <utils/memory.hpp>
 
 namespace bench
@@ -97,6 +98,10 @@ private:
             {
                 static_cast<Derived *>(this)->run_iteration(iterations());
             }
+            catch (utils::fatal_error & e)
+            {
+                std::rethrow_exception(std::current_exception());
+            }
             catch (std::exception & e)
             {
                 test_loop::add_error();
@@ -116,6 +121,10 @@ private:
             try
             {
                 static_cast<Derived *>(this)->run_iteration(iterations());
+            }
+            catch (utils::fatal_error & e)
+            {
+                std::rethrow_exception(std::current_exception());
             }
             catch (std::exception & e)
             {

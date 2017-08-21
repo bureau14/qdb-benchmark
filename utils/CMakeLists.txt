@@ -1,5 +1,5 @@
 set(FILES
-    detailed_error.hpp
+    fatal_error.hpp
     memory.hpp
     random.cpp
     random.hpp
