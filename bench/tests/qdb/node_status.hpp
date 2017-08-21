@@ -27,15 +27,12 @@ public:
 
     void setup() override
     {
-        if (_cluster_key != "")
+        if (_cluster_key != "" && _user_config != "")
         {
             _quasardb.set_cluster_security(_cluster_key);
-        }
-        if (_user_config != "")
-        {
             _quasardb.set_user_security(_user_config);
+            _quasardb.set_encryption(_encryption_algorithm);
         }
-        _quasardb.set_encryption(_encryption_algorithm);
 
         for (auto node = first_node(); !has_node(node); node = get_successor(node))
         {

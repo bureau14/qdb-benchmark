@@ -1,5 +1,4 @@
 #include <bench/tests/qdb/quasardb_facade.hpp>
-#include <utils/detailed_error.hpp>
 #include <utils/invocation_string.hpp>
 #include <ArduinoJson.h>
 #include <fstream>
@@ -30,45 +29,27 @@ using namespace bench::tests::qdb;
 
 using namespace bench::tests::qdb;
 
-static bool is_error(qdb_error_t err)
-{
-    switch (err)
-    {
-    case qdb_e_ok:
-    case qdb_e_ok_created:
-    case qdb_e_element_already_exists:
-    case qdb_e_element_not_found:
-        return false;
-    default:
-        return true;
-    }
-}
-
 template <typename Function, typename... Args>
 static qdb_error_t named_invoke(const char * name, Function function, Args &&... args)
 {
     qdb_error_t err = function(args...);
-    if (is_error(err))
+    if (QDB_FAILURE(err))
     {
-        std::string message = qdb_error(err);
-        std::string details =
-            fmt::format("{} returned {:#08x}", utils::make_invocation_string(name, std::forward<Args>(args)...),
-                        std::uint32_t(err));
+        std::string error_str =
+            fmt::format("{} returned [{:#08x}, {}]", utils::make_invocation_string(name, std::forward<Args>(args)...),
+                        std::uint32_t(err), qdb_error(err));
 
         if ((err == qdb_e_system_local) || (err == qdb_e_system_remote))
         {
-            message += ": ";
 #ifdef _WIN32
             std::uint32_t lastError = utils::win32::get_last_error();
-            message += utils::win32::get_error_string(lastError);
-            details += fmt::format(" and GetLastError() returned {}", lastError);
+            error_str +=
+                fmt::format(" && system returned [{}, {}]", lastError, utils::win32::get_error_string(lastError));
 #else
-            message += std::strerror(errno);
-            details += fmt::format(" and errno equals {}", errno);
+            error_str += fmt::format(" && system returned [{}, {}]", errno, std::strerror(errno));
 #endif
         }
-
-        throw utils::detailed_error(message, details);
+        throw std::runtime_error(error_str);
     }
     return err;
 }

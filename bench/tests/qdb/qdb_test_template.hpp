@@ -27,15 +27,12 @@ public:
 
     void setup() override
     {
-        if (_cluster_key != "")
+        if (_cluster_key != "" && _user_config != "")
         {
             _qdb.set_cluster_security(_cluster_key);
-        }
-        if (_user_config != "")
-        {
             _qdb.set_user_security(_user_config);
+            _qdb.set_encryption(_encryption_algorithm);
         }
-        _qdb.set_encryption(_encryption_algorithm);
         _qdb.connect(_cluster_uri);
     }
 

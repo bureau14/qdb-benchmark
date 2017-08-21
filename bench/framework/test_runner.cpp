@@ -8,7 +8,6 @@
 #endif
 #include <bench/framework/test_thread.hpp>
 #include <bench/log/logger.hpp>
-#include <utils/detailed_error.hpp>
 #include <utils/for_each.hpp>
 #include <utils/memory.hpp>
 #include <algorithm>
@@ -82,12 +81,6 @@ bool test_runner::step1_setup()
         _logger.setup_succeeded(*_test);
         return true;
     }
-    catch (utils::detailed_error & e)
-    {
-        _test->errors.push_back({e.message(), e.invocation()});
-        _logger.setup_failed(*_test);
-        return false;
-    }
     catch (std::exception & e)
     {
         _test->errors.push_back({e.what(), "Error happened during test setup"});
@@ -119,11 +112,6 @@ void test_runner::step2_loop()
 
         _logger.loop_succeeded(*_test);
     }
-    catch (utils::detailed_error & e)
-    {
-        _test->errors.push_back({e.message(), e.invocation()});
-        _logger.loop_failed(*_test);
-    }
     catch (std::exception & e)
     {
         _test->errors.push_back({e.what(), "Error happened during test execution"});
@@ -148,14 +136,9 @@ void test_runner::step3_cleanup()
 
         _logger.cleanup_succeeded(*_test);
     }
-    catch (utils::detailed_error & e)
-    {
-        _test->errors.push_back({e.message(), e.invocation()});
-        _logger.cleanup_failed(*_test);
-    }
     catch (std::exception & e)
     {
-        _test->errors.push_back({e.what(), "Error happened during tset cleanup"});
+        _test->errors.push_back({e.what(), "Error happened during test cleanup"});
         _logger.cleanup_failed(*_test);
     }
 }

@@ -93,7 +93,18 @@ private:
     {
         while (clock::now() < timeout)
         {
-            static_cast<Derived *>(this)->run_iteration(iterations());
+            try
+            {
+                static_cast<Derived *>(this)->run_iteration(iterations());
+            }
+            catch (std::exception & e)
+            {
+                test_loop::add_error();
+                if (test_loop::exceed_error_limit())
+                {
+                    std::rethrow_exception(std::current_exception());
+                }
+            }
             test_loop::add_iteration();
         }
     }
@@ -102,7 +113,18 @@ private:
     {
         while (iterations() < count)
         {
-            static_cast<Derived *>(this)->run_iteration(iterations());
+            try
+            {
+                static_cast<Derived *>(this)->run_iteration(iterations());
+            }
+            catch (std::exception & e)
+            {
+                test_loop::add_error();
+                if (test_loop::exceed_error_limit())
+                {
+                    std::rethrow_exception(std::current_exception());
+                }
+            }
             test_loop::add_iteration();
         }
     }
