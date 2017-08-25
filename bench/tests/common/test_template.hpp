@@ -1,7 +1,9 @@
 #pragma once
 
 #include <bench/core/test_class.hpp>
+#include <utils/detailed_error.hpp>
 #include <utils/memory.hpp>
+#include <chrono>
 
 namespace bench
 {
@@ -14,6 +16,9 @@ class test_template : public test_loop
 public:
     class test_class : public bench::test_class
     {
+    protected:
+        using is_async = std::false_type;
+
     public:
         test_class()
         {
@@ -93,8 +98,7 @@ private:
     {
         while (clock::now() < timeout)
         {
-            static_cast<Derived *>(this)->run_iteration(iterations());
-            test_loop::add_iteration();
+            iterate();
         }
     }
 
@@ -102,10 +106,41 @@ private:
     {
         while (iterations() < count)
         {
-            static_cast<Derived *>(this)->run_iteration(iterations());
-            test_loop::add_iteration();
+            iterate();
         }
     }
+
+    void iterate()
+    {
+        try
+        {
+            auto start = std::chrono::high_resolution_clock::now();
+            static_cast<Derived *>(this)->run_iteration(iterations());
+            auto end = std::chrono::high_resolution_clock::now();
+            std::chrono::duration<std::uint64_t, std::nano> duration = end - start;
+            test_loop::add_duration(duration.count());
+        }
+        catch (utils::detailed_error & e)
+        {
+            test_loop::add_failure();
+        }
+        catch (std::exception & e)
+        {
+            test_loop::add_failure();
+        }
+        test_loop::add_iteration();
+    }
+
+    // template <typename T>
+    // std::enable_if_t<!std::is_same_v<Derived::is_async, std::false_type>, void> iterate()
+    // {
+    // }
+
+    // template <typename T>
+    // std::enable_if_t<!std::is_same_v<Derived::is_async, std::true_type>, void> iterate()
+    // {
+    //     static_cast<Derived *>(this)->run_iteration(iterations());
+    // }
 
     test_config _config;
     std::uint32_t _prepared_iterations;

@@ -16,6 +16,10 @@ static const char * unit_name(bench::unit unit)
         return "bytes";
     case bench::unit::bytes_per_second:
         return "bytes/second";
+    case bench::unit::millisecond:
+        return "millisecond";
+    case bench::unit::nanosecond:
+        return "nanosecond";
     default:
         return "undefined";
     }

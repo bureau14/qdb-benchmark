@@ -35,6 +35,7 @@ void cb_get_callback(lcb_t instance, int cbtype, const lcb_RESPBASE * rb)
         _cv.notify_one();
     }
 }
+
 void cb_put_callback(lcb_t instance, int cbtype, const lcb_RESPBASE * rb)
 {
     {
@@ -45,6 +46,7 @@ void cb_put_callback(lcb_t instance, int cbtype, const lcb_RESPBASE * rb)
         _cv.notify_one();
     }
 }
+
 void cb_rm_callback(lcb_t instance, int cbtype, const lcb_RESPBASE * rb)
 {
     {

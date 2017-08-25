@@ -32,6 +32,20 @@ public:
         return _test_loop->iterations();
     }
 
+    std::uint32_t successes() const
+    {
+        return _test_loop->successes();
+    }
+
+    std::uint32_t failures() const
+    {
+        return _test_loop->failures();
+    }
+    double avg_duration()
+    {
+        return _test_loop->avg_duration();
+    }
+
     void setup()
     {
         _test_loop->setup();

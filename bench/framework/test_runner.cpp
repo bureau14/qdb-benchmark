@@ -23,7 +23,8 @@ static duration compute_sampling_period(duration test_duration)
 {
     const duration longest = std::chrono::minutes(1);
     const duration shortest = std::chrono::milliseconds(100);
-    return std::min(std::max(shortest, test_duration / 100), longest);
+    // return std::min(std::max(shortest, test_duration / 100), longest);
+    return std::chrono::milliseconds(50);
 }
 
 void test_runner::create_threads()

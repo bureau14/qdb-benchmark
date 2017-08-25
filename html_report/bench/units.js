@@ -15,6 +15,18 @@ bench.units = (function(){
         else return value.toFixed(0) + suffix;
     }
 
+    function formatTime(value, index) {
+        var multipliers = ["ns", "\xB5s", "ms", "s", "min"];
+        var divisors = [1000,1000,1000,60,60]
+        value = parseFloat(value);
+        var m = index;
+        while (value >= divisors[m] && m < divisors.length) {
+            value /= divisors[m];
+            m++;
+        }
+        return value + " " + multipliers[m]
+    }
+
     return {
         "none": function(x) {
             return formatValue(x, 1000, "")
@@ -42,6 +54,14 @@ bench.units = (function(){
 
         "millisecond": function(x) {
             return formatValue(x/1000.0, 1000, "s")
+        },
+
+        "microsecond": function(x) {
+            return formatTime(x, 1)
+        },
+
+        "nanosecond": function(x) {
+            return formatTime(x, 0)
         }
     }
 })();

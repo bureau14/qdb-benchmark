@@ -7,7 +7,9 @@ enum class unit
 {
     none,
     bytes,
-    bytes_per_second
+    bytes_per_second,
+    millisecond,
+    nanosecond
 };
 
 } // namespace bench
