@@ -56,10 +56,6 @@ bench.units = (function(){
             return formatValue(x/1000.0, 1000, "s")
         },
 
-        "microsecond": function(x) {
-            return formatTime(x, 1)
-        },
-
         "nanosecond": function(x) {
             return formatTime(x, 0)
         }

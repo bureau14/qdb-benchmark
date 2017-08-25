@@ -16,9 +16,6 @@ class test_template : public test_loop
 public:
     class test_class : public bench::test_class
     {
-    protected:
-        using is_async = std::false_type;
-
     public:
         test_class()
         {
@@ -130,17 +127,6 @@ private:
         }
         test_loop::add_iteration();
     }
-
-    // template <typename T>
-    // std::enable_if_t<!std::is_same_v<Derived::is_async, std::false_type>, void> iterate()
-    // {
-    // }
-
-    // template <typename T>
-    // std::enable_if_t<!std::is_same_v<Derived::is_async, std::true_type>, void> iterate()
-    // {
-    //     static_cast<Derived *>(this)->run_iteration(iterations());
-    // }
 
     test_config _config;
     std::uint32_t _prepared_iterations;
