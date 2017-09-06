@@ -2,6 +2,10 @@ cmake_minimum_required(VERSION 3.2)
 project(qdb-benchmark)
 enable_testing()
 
+option(USE_CASSANDRA "Enables build for cassandra"   OFF)
+option(USE_MONGODB   "Enables build for mongodb"     OFF)
+option(USE_COUCHBASE "Enables build for couchbase"   OFF)
+
 list(APPEND CMAKE_MODULE_PATH ${CMAKE_CURRENT_SOURCE_DIR}/cmake_modules)
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
 
@@ -19,12 +23,19 @@ find_package(Threads)
 
 add_subdirectory(thirdparty/ArduinoJson/src)
 add_subdirectory(thirdparty/boost)
-add_subdirectory(thirdparty/cassandra)
 add_subdirectory(thirdparty/cppformat)
-add_subdirectory(thirdparty/mongodb)
 add_subdirectory(thirdparty/netsnmp)
 add_subdirectory(thirdparty/quasardb)
-add_subdirectory(thirdparty/couchbase)
+
+if(USE_CASSANDRA)
+    add_subdirectory(thirdparty/cassandra)
+endif()
+if(USE_MONGODB)
+    add_subdirectory(thirdparty/mongodb)
+endif()
+if(USE_COUCHBASE)
+    add_subdirectory(thirdparty/couchbase)
+endif()
 
 if(NOT MSVC)
     add_compile_options(-Wall -pedantic)
