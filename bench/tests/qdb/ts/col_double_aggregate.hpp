@@ -34,8 +34,9 @@ public:
             return qdb_ts_double_point{qdb_timespec_t{cursor++, 0}, static_cast<double>(cursor)};   
         });
 
-        _inserted_range.begin = points.front().timestamp;
-        _inserted_range.end = points.back().timestamp;
+        _inserted_range.range.begin = points.front().timestamp;
+        _inserted_range.range.end = points.back().timestamp;
+        _inserted_range.filter.type = qdb_ts_filter_none;
 
         _qdb.ts_col_double_inserts(alias(0), "double_col", points.data(), points.size());
     }
@@ -68,7 +69,7 @@ public:
 
 private:
     const size_t _ts_size;
-    qdb_ts_range_t _inserted_range;
+    qdb_ts_filtered_range_t _inserted_range;
 
 };
 } // namespace ts
