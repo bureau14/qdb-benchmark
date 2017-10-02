@@ -1,19 +1,23 @@
 #!/bin/bash -eu
 #
-# Invocation ./teamcity.sh qdbd_args --- qdb-benchmark_args
+# Invocation ./teamcity.sh qdbd_args -- qdb-benchmark_args
 
 set -eu
 
 declare -a QDBD_ARGS
 declare -a BENCH_ARGS
 
+QDBD_ARGS+=("--security=false")
+QDBD_ARGS+=("--log-flush-interval=1")
+QDBD_ARGS+=("--store-history=false")
+
 while [[ $# > 0 ]] ; do
-  [ "$1" == "---" ] && break
+  [ "$1" == "--" ] && break
   QDBD_ARGS+=("$1")
   shift
 done
 
-shift # it should be '---'
+shift # it should be '--'
 
 while [[ $# > 0 ]] ; do
   BENCH_ARGS+=("$1")
