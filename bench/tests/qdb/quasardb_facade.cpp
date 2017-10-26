@@ -293,7 +293,8 @@ void quasardb_facade::get_tags(const std::string & alias)
 
 void quasardb_facade::ts_create(const std::string & alias, const std::vector<qdb_ts_column_info_t> & columns)
 {
-    INVOKE(qdb_ts_create, _handle, alias.c_str(), columns.data(), columns.size());
+    INVOKE(qdb_ts_create, _handle, alias.c_str(), static_cast<qdb_duration_t>(24 * qdb_d_hour), columns.data(),
+           columns.size());
 }
 
 void quasardb_facade::ts_col_blob_insert(const std::string & alias,
