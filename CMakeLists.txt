@@ -23,7 +23,7 @@ find_package(Threads)
 
 add_subdirectory(thirdparty/ArduinoJson/src)
 add_subdirectory(thirdparty/boost)
-add_subdirectory(thirdparty/cppformat)
+add_subdirectory(thirdparty/fmt)
 add_subdirectory(thirdparty/netsnmp)
 add_subdirectory(thirdparty/quasardb)
 
@@ -48,6 +48,7 @@ endif()
 
 include_directories(${CMAKE_SOURCE_DIR})
 include_directories("${CMAKE_SOURCE_DIR}/thirdparty/boost")
+include_directories("${CMAKE_SOURCE_DIR}/thirdparty/fmt")
 add_subdirectory(bench/app)
 add_subdirectory(bench/core)
 add_subdirectory(bench/framework)
@@ -70,8 +71,8 @@ add_executable(qdb-benchmark
 )
 
 target_compile_definitions(qdb-benchmark
-	PRIVATE
-	-D_CRT_SECURE_NO_WARNINGS # disable VS warning on getenv()
+    PRIVATE
+    -D_CRT_SECURE_NO_WARNINGS # disable VS warning on getenv()
 )
 
 target_link_libraries(qdb-benchmark

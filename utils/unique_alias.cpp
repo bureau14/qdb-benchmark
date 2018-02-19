@@ -1,7 +1,7 @@
 #include <utils/unique_alias.hpp>
 #include <utils/watermark.hpp>
 
-#include <cppformat/format.h>
+#include <fmt/format.h>
 #include <atomic>
 #include <chrono>
 #ifdef _WIN32

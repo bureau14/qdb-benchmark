@@ -3,7 +3,7 @@
 #include <bench/core/computations.hpp>
 #include <bench/log/logger.hpp>
 #include <bench/log/unit.hpp>
-#include <cppformat/format.h>
+#include <fmt/format.h>
 #include <chrono>
 
 namespace bench
@@ -66,9 +66,7 @@ public:
         }
     }
 
-    void test_finished(const test_instance &) override
-    {
-    }
+    void test_finished(const test_instance &) override {}
 
     // Test setup
 

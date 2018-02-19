@@ -4,6 +4,12 @@ if(CLANG)
     )
 endif()
 
+if(MSVC)
+    add_compile_options(
+        /wd4244 # 'argument': conversion from '__int64' to 'int', possible loss of data
+    )
+endif()
+
 add_definitions(
     -DBOOST_FILESYSTEM_STATIC_LINK=1
 )

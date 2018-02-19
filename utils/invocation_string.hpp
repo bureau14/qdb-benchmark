@@ -1,13 +1,13 @@
 #pragma once
 
-#include <cppformat/format.h>
-
+#include <fmt/format.h>
 #include <cstring>
 #include <string>
 #include <vector>
 
 namespace utils
 {
+
 template <typename Arg>
 std::string get_argument_string(Arg * arg)
 {
@@ -44,4 +44,5 @@ std::string make_invocation_string(const char * function_name, Args &&... args)
     result.back() = ')';
     return result;
 }
-}
+
+} // namespace utils

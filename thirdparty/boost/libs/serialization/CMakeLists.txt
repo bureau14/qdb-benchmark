@@ -27,3 +27,8 @@ add_library(boost_serialization
     src/xml_iarchive.cpp
     src/xml_oarchive.cpp
 )
+
+target_compile_definitions(boost_serialization
+    PRIVATE
+    -D_SCL_SECURE_NO_WARNINGS
+)

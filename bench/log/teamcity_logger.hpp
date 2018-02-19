@@ -22,13 +22,9 @@ public:
         utils::teamcity::message("Wait " + std::to_string(seconds) + (seconds > 1 ? " seconds" : " second"));
     }
 
-    void schedule(const std::vector<test_instance> &) override
-    {
-    }
+    void schedule(const std::vector<test_instance> &) override {}
 
-    void summary(size_t /*success_count*/, size_t /*total_test_count*/) override
-    {
-    }
+    void summary(size_t /*success_count*/, size_t /*total_test_count*/) override {}
 
     // Whole test
 
@@ -137,7 +133,7 @@ private:
     static std::string make_test_name(const bench::test_instance & test)
     {
         std::string s;
-        s = test.tclass.name + "." + make_thread_string(test.config.thread_count);
+        s = test.tclass.name + "." + make_thread_string(static_cast<int>(test.config.thread_count));
         if (test.tclass.size_dependent) s += "." + make_size_string(test.config.content_size);
         return s;
     }

@@ -24,7 +24,7 @@ set_ide_folder("libs"
 
 set_ide_folder("thirdparty"
     ArduinoJson
-    cppformat
+    fmt
 )
 
 set_ide_folder("thirdparty/boost"

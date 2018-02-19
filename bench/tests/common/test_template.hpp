@@ -38,13 +38,12 @@ public:
         return {};
     }
 
-    test_template(test_config config) : _config(config), _prepared_iterations(config.iterations)
+    test_template(test_config config)
+        : _config(config), _prepared_iterations(static_cast<std::uint32_t>(config.iterations))
     {
     }
 
-    void setup() override
-    {
-    }
+    void setup() override {}
 
     void run() override
     {
@@ -54,9 +53,7 @@ public:
             run_iteration_until(clock::now() + _config.duration);
     }
 
-    void cleanup() override
-    {
-    }
+    void cleanup() override {}
 
 protected:
     template <typename Function>
@@ -73,7 +70,7 @@ protected:
     {
         if (_prepared_iterations != 0)
         {
-            for (auto iteration = std::size_t(0); iteration < _prepared_iterations; ++iteration)
+            for (auto iteration = 0u; iteration < _prepared_iterations; ++iteration)
             {
                 function(iteration);
             }

@@ -14,7 +14,7 @@
 #include <qdb/stream.h>
 #include <qdb/tag.h>
 #include <qdb/ts.h>
-#include <cppformat/format.h>
+#include <fmt/format.h>
 #ifndef _WIN32
 #include <cerrno>
 #include <cstring>
@@ -107,8 +107,8 @@ void quasardb_facade::set_user_security(const std::string & user_credentials_fil
     StaticJsonBuffer<200> jsonBuffer;
 
     JsonObject & root = jsonBuffer.parseObject(user.c_str());
-    auto username = root["username"];
-    auto password = root["secret_key"];
+    const char * username = root["username"];
+    const char * password = root["secret_key"];
     INVOKE(qdb_option_set_user_credentials, _handle, username, password);
 }
 

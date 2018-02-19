@@ -24,4 +24,4 @@ if (WIN32)
 endif()
 
 add_library(utils ${FILES})
-target_link_libraries(utils cppformat)
+target_link_libraries(utils fmt)

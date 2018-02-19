@@ -1,6 +1,6 @@
 #include <utils/teamcity.hpp>
 
-#include <cppformat/format.h>
+#include <fmt/format.h>
 #include <regex>
 
 std::string escape(const std::string & input)
