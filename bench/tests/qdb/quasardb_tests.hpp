@@ -13,9 +13,6 @@
 #include <bench/tests/qdb/deque/pop_front.hpp>
 #include <bench/tests/qdb/deque/push_back.hpp>
 #include <bench/tests/qdb/deque/push_front.hpp>
-#include <bench/tests/qdb/hset/contains.hpp>
-#include <bench/tests/qdb/hset/erase.hpp>
-#include <bench/tests/qdb/hset/insert.hpp>
 #include <bench/tests/qdb/integer/add.hpp>
 #include <bench/tests/qdb/integer/get.hpp>
 #include <bench/tests/qdb/integer/put.hpp>
@@ -26,8 +23,8 @@
 #include <bench/tests/qdb/tag/get_tagged.hpp>
 #include <bench/tests/qdb/tag/get_tags.hpp>
 #include <bench/tests/qdb/ts/col_blob_insert.hpp>
-#include <bench/tests/qdb/ts/col_double_insert.hpp>
 #include <bench/tests/qdb/ts/col_double_aggregate.hpp>
+#include <bench/tests/qdb/ts/col_double_insert.hpp>
 
 namespace bench
 {
@@ -52,9 +49,6 @@ void get_tests(OutputIt it)
     *it++ = new qdb::deque::pop_front::test_class();
     *it++ = new qdb::deque::push_back::test_class();
     *it++ = new qdb::deque::push_front::test_class();
-    *it++ = new qdb::hset::contains::test_class();
-    *it++ = new qdb::hset::erase::test_class();
-    *it++ = new qdb::hset::insert::test_class();
     *it++ = new qdb::integer::add::test_class();
     *it++ = new qdb::integer::get::test_class();
     *it++ = new qdb::integer::put::test_class();

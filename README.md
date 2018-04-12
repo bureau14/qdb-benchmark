@@ -99,27 +99,24 @@ To know the list of supported tests, just run `qdb-benchmark --help` or `qdb-ben
 The current list of supported tests is:
 
 1. qdb_blob_attach_tag
-2. qdb_blob_get
-3. qdb_blob_get_noalloc
-4. qdb_blob_put
-5. qdb_blob_remove
-6. qdb_blob_update
-7. qdb_deque_pop_back
-8. qdb_deque_pop_front
-9. qdb_deque_push_back
-10. qdb_deque_push_front
-11. qdb_hset_contains
-12. qdb_hset_erase
-13. qdb_hset_insert
-14. qdb_int_add
-15. qdb_int_get
-16. qdb_int_put
-17. qdb_int_remove
-18. qdb_int_update
-19. qdb_stream_write
-20. std_atomic
-21. std_fread
-22. std_fwrite
-23. std_mutex
+1. qdb_blob_get
+1. qdb_blob_get_noalloc
+1. qdb_blob_put
+1. qdb_blob_remove
+1. qdb_blob_update
+1. qdb_deque_pop_back
+1. qdb_deque_pop_front
+1. qdb_deque_push_back
+1. qdb_deque_push_front
+1. qdb_int_add
+1. qdb_int_get
+1. qdb_int_put
+1. qdb_int_remove
+1. qdb_int_update
+1. qdb_stream_write
+1. std_atomic
+1. std_fread
+1. std_fwrite
+1. std_mutex
 
 The default is to run all tests, which can be quite long.

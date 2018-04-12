@@ -8,7 +8,6 @@
 #endif
 #include <qdb/blob.h>
 #include <qdb/deque.h>
-#include <qdb/hset.h>
 #include <qdb/integer.h>
 #include <qdb/node.h>
 #include <qdb/stream.h>
@@ -243,23 +242,6 @@ std::int64_t quasardb_facade::int_get(const std::string & alias)
     std::int64_t value;
     INVOKE(qdb_int_get, _handle, alias.c_str(), &value);
     return value;
-}
-
-bool quasardb_facade::hset_contains(const std::string & alias, const std::string & content)
-{
-    return INVOKE(qdb_hset_contains, _handle, alias.c_str(), content.data(), content.size())
-           == qdb_e_element_already_exists;
-}
-
-bool quasardb_facade::hset_erase(const std::string & alias, const std::string & content)
-{
-    return INVOKE(qdb_hset_contains, _handle, alias.c_str(), content.data(), content.size()) != qdb_e_element_not_found;
-}
-
-bool quasardb_facade::hset_insert(const std::string & alias, const std::string & content)
-{
-    return INVOKE(qdb_hset_insert, _handle, alias.c_str(), content.data(), content.size())
-           != qdb_e_element_already_exists;
 }
 
 void quasardb_facade::attach_tag(const std::string & alias, const std::string & tag)

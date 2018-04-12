@@ -17,9 +17,6 @@ add_library(bench-tests-quasardb
     deque/pop_front.hpp
     deque/push_back.hpp
     deque/push_front.hpp
-    hset/contains.hpp
-    hset/erase.hpp
-    hset/insert.hpp
     integer/add.hpp
     integer/get.hpp
     integer/put.hpp
