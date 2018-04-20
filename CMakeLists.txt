@@ -107,7 +107,7 @@ if(EXISTS ${QDB_API_DLL})
         $<TARGET_FILE_DIR:qdb-benchmark>)
 endif()
 
-set(CPACK_PACKAGE_VERSION "2.5.0")
+set(CPACK_PACKAGE_VERSION "2.6.0")
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
 include(CPack)
 install(TARGETS qdb-benchmark
