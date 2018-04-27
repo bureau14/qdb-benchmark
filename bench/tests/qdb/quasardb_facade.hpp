@@ -58,7 +58,7 @@ private:
 class qdb_stream_facade
 {
 public:
-    qdb_stream_facade(qdb_stream_t h = nullptr) : _handle(h){} {}
+    qdb_stream_facade(qdb_stream_t h = nullptr) : _handle(h) {}
 
     void close();
     void write(const std::string & content);
