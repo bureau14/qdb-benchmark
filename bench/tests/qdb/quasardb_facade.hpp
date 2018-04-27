@@ -19,9 +19,7 @@ namespace qdb
 class qdb_buffer
 {
 public:
-    qdb_buffer() : _handle(nullptr), _content(nullptr), _content_size(0)
-    {
-    }
+    qdb_buffer() : _handle(nullptr), _content(nullptr), _content_size(0) {}
 
     qdb_buffer(qdb_handle_t h, const void * content, size_t content_size)
         : _handle(h), _content(content), _content_size(content_size)
@@ -60,9 +58,7 @@ private:
 class qdb_stream_facade
 {
 public:
-    qdb_stream_facade(qdb_stream_t h = nullptr) : _handle(h) {}
-    {
-    }
+    qdb_stream_facade(qdb_stream_t h = nullptr) : _handle(h){} {}
 
     void close();
     void write(const std::string & content);
