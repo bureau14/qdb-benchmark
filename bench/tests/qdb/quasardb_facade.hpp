@@ -19,7 +19,9 @@ namespace qdb
 class qdb_buffer
 {
 public:
-    qdb_buffer() : _handle(nullptr), _content(nullptr), _content_size(0) {}
+    qdb_buffer() : _handle(nullptr), _content(nullptr), _content_size(0)
+    {
+    }
 
     qdb_buffer(qdb_handle_t h, const void * content, size_t content_size)
         : _handle(h), _content(content), _content_size(content_size)
@@ -59,6 +61,8 @@ class qdb_stream_facade
 {
 public:
     qdb_stream_facade(qdb_stream_t h = nullptr) : _handle(h) {}
+    {
+    }
 
     void close();
     void write(const std::string & content);
@@ -121,9 +125,7 @@ public:
                                const std::string & col_name,
                                const qdb_ts_double_point * points,
                                size_t count);
-    void ts_col_double_average(const std::string & alias,
-                               const std::string & col_name,
-                               const qdb_ts_filtered_range_t & range);
+    void ts_col_double_average(const std::string & alias, const std::string & col_name, const qdb_ts_range_t & range);
 
     qdb_stream_t stream_open(const std::string & alias, qdb_stream_mode_t mode);
 
