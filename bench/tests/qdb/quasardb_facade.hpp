@@ -121,9 +121,7 @@ public:
                                const std::string & col_name,
                                const qdb_ts_double_point * points,
                                size_t count);
-    void ts_col_double_average(const std::string & alias,
-                               const std::string & col_name,
-                               const qdb_ts_filtered_range_t & range);
+    void ts_col_double_average(const std::string & alias, const std::string & col_name, const qdb_ts_range_t & range);
 
     qdb_stream_t stream_open(const std::string & alias, qdb_stream_mode_t mode);
 
