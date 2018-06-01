@@ -66,6 +66,16 @@ if (TARGET netsnmp)
     add_subdirectory(snmp)
 endif()
 
+function(add_lib_to_rpath EXECUTABLE)
+    if(NOT APPLE)
+        return()
+    endif()
+
+    # See: https://wincent.com/wiki/@executable_path,_@load_path_and_@rpath
+    set_target_properties(${EXECUTABLE} PROPERTIES BUILD_WITH_INSTALL_RPATH 1)
+    set_target_properties(${EXECUTABLE} PROPERTIES INSTALL_RPATH "@executable_path/../lib")
+endfunction()
+
 add_executable(qdb-benchmark
     main.cpp
 )
@@ -103,13 +113,32 @@ add_test(help qdb-benchmark --tests qdb_blob_put --sizes 1M)
 if(EXISTS ${QDB_API_DLL})
     add_custom_command(TARGET qdb-benchmark POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-        ${QDB_API_DLL}
-        $<TARGET_FILE_DIR:qdb-benchmark>)
+            ${QDB_API_DLL}
+            $<TARGET_FILE_DIR:qdb-benchmark>
+    )
+endif()
+
+if(APPLE)
+    # For tests, we need to copy qdb API library.
+    if(EXISTS ${QDB_API_LIBRARY})
+        add_custom_command(TARGET qdb-benchmark POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E make_directory
+                $<TARGET_FILE_DIR:qdb-benchmark>/../lib/
+        )
+        add_custom_command(TARGET qdb-benchmark POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                ${QDB_API_LIBRARY}
+                $<TARGET_FILE_DIR:qdb-benchmark>/../lib/
+        )
+    endif()
+
+    add_lib_to_rpath(qdb-benchmark)
 endif()
 
 set(CPACK_PACKAGE_VERSION "2.6.0")
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
 include(CPack)
+
 install(TARGETS qdb-benchmark
     RUNTIME DESTINATION bin
     LIBRARY DESTINATION lib
