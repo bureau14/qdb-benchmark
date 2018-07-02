@@ -13,8 +13,8 @@ if(WIN32)
 endif()
 
 find_library(QDB_API_LIBRARY
-	qdb_api
-	HINTS ${CMAKE_CURRENT_LIST_DIR}/lib
+    qdb_api
+    HINTS ${CMAKE_CURRENT_LIST_DIR}/lib
 )
 
 if(NOT EXISTS ${QDB_API_LIBRARY})
@@ -24,7 +24,7 @@ endif()
 
 message(STATUS "Found qdb_api library: ${QDB_API_LIBRARY}")
 
-find_path(QDB_API_INCLUDE 
+find_path(QDB_API_INCLUDE
     qdb/client.h
     HINTS ${CMAKE_CURRENT_LIST_DIR}/include
 )
@@ -40,8 +40,8 @@ else()
     add_library(qdb_api SHARED IMPORTED GLOBAL)
 endif()
 
-set_target_properties(qdb_api 
-    PROPERTIES 
+set_target_properties(qdb_api
+    PROPERTIES
     IMPORTED_LOCATION ${QDB_API_LIBRARY}
     INTERFACE_INCLUDE_DIRECTORIES ${QDB_API_INCLUDE}
 )
