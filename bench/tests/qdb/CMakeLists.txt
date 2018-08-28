@@ -12,11 +12,6 @@ add_library(bench-tests-quasardb
     blob/remove.hpp
     blob/detach_tag.hpp
     blob/update.hpp
-    deque/get_at.hpp
-    deque/pop_back.hpp
-    deque/pop_front.hpp
-    deque/push_back.hpp
-    deque/push_front.hpp
     integer/add.hpp
     integer/get.hpp
     integer/put.hpp

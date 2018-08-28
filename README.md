@@ -104,10 +104,6 @@ The current list of supported tests is:
 1. qdb_blob_put
 1. qdb_blob_remove
 1. qdb_blob_update
-1. qdb_deque_pop_back
-1. qdb_deque_pop_front
-1. qdb_deque_push_back
-1. qdb_deque_push_front
 1. qdb_int_add
 1. qdb_int_get
 1. qdb_int_put

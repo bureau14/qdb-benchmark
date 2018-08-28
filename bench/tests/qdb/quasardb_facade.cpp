@@ -7,7 +7,6 @@
 #include <utils/win32.hpp>
 #endif
 #include <qdb/blob.h>
-#include <qdb/deque.h>
 #include <qdb/integer.h>
 #include <qdb/node.h>
 #include <qdb/stream.h>
@@ -184,40 +183,6 @@ void quasardb_facade::blob_get_noalloc(const std::string & alias, std::string & 
 void quasardb_facade::remove(const std::string & alias)
 {
     INVOKE(qdb_remove, _handle, alias.c_str());
-}
-
-qdb_buffer quasardb_facade::deque_get_at(const std::string & alias, qdb_int_t index)
-{
-    const void * result;
-    std::size_t result_size;
-    INVOKE(qdb_deque_get_at, _handle, alias.c_str(), index, &result, &result_size);
-    return qdb_buffer(_handle, result, result_size);
-}
-
-qdb_buffer quasardb_facade::deque_pop_back(const std::string & alias)
-{
-    const void * result;
-    std::size_t result_size;
-    INVOKE(qdb_deque_pop_back, _handle, alias.c_str(), &result, &result_size);
-    return qdb_buffer(_handle, result, result_size);
-}
-
-qdb_buffer quasardb_facade::deque_pop_front(const std::string & alias)
-{
-    const void * result;
-    std::size_t result_size;
-    INVOKE(qdb_deque_pop_front, _handle, alias.c_str(), &result, &result_size);
-    return qdb_buffer(_handle, result, result_size);
-}
-
-void quasardb_facade::deque_push_back(const std::string & alias, const std::string & content)
-{
-    INVOKE(qdb_deque_push_back, _handle, alias.c_str(), content.data(), content.size());
-}
-
-void quasardb_facade::deque_push_front(const std::string & alias, const std::string & content)
-{
-    INVOKE(qdb_deque_push_front, _handle, alias.c_str(), content.data(), content.size());
 }
 
 std::int64_t quasardb_facade::int_add(const std::string & alias, std::int64_t value)

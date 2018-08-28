@@ -8,11 +8,6 @@
 #include <bench/tests/qdb/blob/put.hpp>
 #include <bench/tests/qdb/blob/remove.hpp>
 #include <bench/tests/qdb/blob/update.hpp>
-#include <bench/tests/qdb/deque/get_at.hpp>
-#include <bench/tests/qdb/deque/pop_back.hpp>
-#include <bench/tests/qdb/deque/pop_front.hpp>
-#include <bench/tests/qdb/deque/push_back.hpp>
-#include <bench/tests/qdb/deque/push_front.hpp>
 #include <bench/tests/qdb/integer/add.hpp>
 #include <bench/tests/qdb/integer/get.hpp>
 #include <bench/tests/qdb/integer/put.hpp>
@@ -44,11 +39,6 @@ void get_tests(OutputIt it)
     *it++ = new qdb::blob::remove::test_class();
     *it++ = new qdb::blob::detach_tag::test_class();
     *it++ = new qdb::blob::update::test_class();
-    *it++ = new qdb::deque::get_at::test_class();
-    *it++ = new qdb::deque::pop_back::test_class();
-    *it++ = new qdb::deque::pop_front::test_class();
-    *it++ = new qdb::deque::push_back::test_class();
-    *it++ = new qdb::deque::push_front::test_class();
     *it++ = new qdb::integer::add::test_class();
     *it++ = new qdb::integer::get::test_class();
     *it++ = new qdb::integer::put::test_class();
