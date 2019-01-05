@@ -26,7 +26,7 @@ done
 
 ROOT=$(dirname $0)/..
 
-exec $ROOT/thirdparty/quasardb/bin/qdbd --root=$ROOT/db "${QDBD_ARGS[@]}" &
+exec $ROOT/thirdparty/quasardb/bin/qdbd --storage-engine=rocksdb --rocksdb-root=$ROOT/db "${QDBD_ARGS[@]}" &
 sleep 3
 PID=$!
 
