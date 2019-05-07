@@ -9,7 +9,7 @@ declare -a BENCH_ARGS
 
 QDBD_ARGS+=("--security=false")
 QDBD_ARGS+=("--log-flush-interval=1")
-QDBD_ARGS+=("--store-history=false")
+QDBD_ARGS+=("--enable-statistics=false")
 
 while [[ $# > 0 ]] ; do
   [ "$1" == "--" ] && break
