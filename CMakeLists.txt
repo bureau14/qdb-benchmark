@@ -135,7 +135,7 @@ if(APPLE)
     add_lib_to_rpath(qdb-benchmark)
 endif()
 
-set(CPACK_PACKAGE_VERSION "3.4.2")
+set(CPACK_PACKAGE_VERSION "3.4.3")
 set(CPACK_INCLUDE_TOPLEVEL_DIRECTORY 0)
 include(CPack)
 
